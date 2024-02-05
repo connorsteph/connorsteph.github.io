@@ -1,0 +1,12 @@
+{
+    "grammarly.selectors": [
+        {
+            "language": "markdown",
+            "scheme": "file",
+            "pattern": "index.md"
+        }
+    ],
+    "cSpell.words": [
+        "Eliashberg"
+    ]
+}
