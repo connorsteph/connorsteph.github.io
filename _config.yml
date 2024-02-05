@@ -18,8 +18,8 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Welcome to my website! # this sets site.title
-description: You could be watching TV right now. # this sets site.description
+title: Connor Stephens # this sets site.title
+description: apparently incapable of web-design # this sets site.description
 # show_downloads: true
 
 # Build settings

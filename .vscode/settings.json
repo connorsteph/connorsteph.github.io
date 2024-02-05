@@ -5,5 +5,8 @@
             "scheme": "file",
             "pattern": "index.md"
         }
+    ],
+    "cSpell.words": [
+        "Eliashberg"
     ]
 }
