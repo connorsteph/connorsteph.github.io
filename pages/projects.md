@@ -33,7 +33,7 @@ permalink: /projects/
 
 ---
 
-### Machine Learning for Structual Biology
+### Machine Learning for Structural Biology
 
 [🧬 ATOM-1](https://www.biorxiv.org/content/10.1101/2023.12.13.571579v1): a foundation model which understands the biophysics of structured RNA molecules.
 
