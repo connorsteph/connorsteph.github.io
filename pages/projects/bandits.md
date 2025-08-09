@@ -7,7 +7,7 @@ permalink: /projects/bandits/
 
 ## Pure Exploration Problems in Multi-Armed Bandits
 
-- My MSc [thesis](https://era.library.ualberta.ca/items/e4d666bc-5825-401d-8cdd-e7dcae90f1fd)
+- My MSc [thesis](https://ualberta.scholaris.ca/items/218785d5-9457-4e13-9c20-1dbfe9c7f0b3)
 
 - My thesis presentation [slides](https://docs.google.com/presentation/d/1oH7xgx8LvFTtbOWEDjjZt4ycRAobA9ztOEjYfNreTqk/edit?usp=sharing) -- contains transitions, be sure to view in presentation mode
 
