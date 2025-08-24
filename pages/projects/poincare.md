@@ -7,10 +7,13 @@ permalink: /projects/poincare/
 
 ## Regressing Dynamic System Parameters from Poincare Maps
 
-Preprint [link](https://arxiv.org/pdf/2306.11258.pdf) ($5 CAD prize if you can help us figure out a better title)
-Link to paper [code](https://github.com/connorsteph/parameter_regression_from_return_maps_paper_code)
+### Preprint [link](https://arxiv.org/pdf/2306.11258.pdf), link to paper [code](https://github.com/connorsteph/parameter_regression_from_return_maps_paper_code) ($5 CAD prize if you can help us figure out a better title).
 
-(I know this page is low on text and a bit eye-burning right now, I'm hoping to come back to this soon! The paper is still going through the journal submission process with all of its wonders)
+### Informal abstract:
+
+Poincare maps can be used to analyze dynamical systems. They have an interesting property in that different dynamical system parameters (say, the mass of a pendulum) result in human-perceptable, smoothly changing characteristics in the Poincare map, even if the underlying trajectories integrated to obtain the maps are highly chaotic. This is notable since estimating the parameters of a dynamical system from trajectory data has proven challenging for chaotic systems. We show that a ResNet can exploit the smoothly changing visual characteristics of Poincare maps to regress a dynamical system's parameters, given a training dataset of Poincare maps for the same system with various parameters. We show that with basic data augmentation you can address some issues that emerge in applying this method in practice, such as the need to make predictions on data coming from trajectories integrated for different lengths of time, or with fewer sampled initial conditions.
+
+---
 
 <table style="width: 100%;">
   <tr>
@@ -31,7 +34,7 @@ Link to paper [code](https://github.com/connorsteph/parameter_regression_from_re
 
 <table style="width: 100%;">
   <tr>
-    <th style="width: 100%;" align="left" valign="top">Figure 3: An example input-output for a deep learning model I developed which estimates the mass ratio parameter of the SAM system which produced the Poincare map (left) input to the network. On the right is the parameter estimate, along with a higher quality Poincare map corresponding to the estimated parameter.</th>
+    <th style="width: 100%;" align="left" valign="top">Figure 3: An example input-output for a ResNet trained to estimate the mass ratio parameter of the SAM system which produced the Poincare map (left) input to the network. On the right is the parameter estimate, along with a higher quality (trajectories integrated from more initial conditions, for longer) Poincare map corresponding to the network's estimated parameter.</th>
   </tr>
   <tr>
     <td style="width: 100%;" align="center" valign="top">
@@ -42,7 +45,7 @@ Link to paper [code](https://github.com/connorsteph/parameter_regression_from_re
 
 <br><br>
 
-<table style="width: 100%;">
+<!-- <table style="width: 100%;">
   <tr>
     <th style="width: 50%;" align="left" valign="top"> Figure 4: Pixel-wise classification of the chaoticity of trajectories using a U-Net style architecture with a standard semantic segmentation approach. Left: ground truth, right: predictions. Note the blob-like artifacts in the prediction (right) which imply multiple classifications for the same trajectory.</th>
     <th style="width: 50%;" align="left" valign="top"> Figure 5: Trajectory chaos classifications obtained from a physics-based modification of the U-Net architecture which makes classifications at the trajectory level.</th>
@@ -55,4 +58,4 @@ Link to paper [code](https://github.com/connorsteph/parameter_regression_from_re
       <img src="https://user-images.githubusercontent.com/24722905/189750494-3c81dfb9-df0d-4c5e-9897-942c32cb349b.png" width="100%" />
     </td>
   </tr>
-</table>
+</table> -->
