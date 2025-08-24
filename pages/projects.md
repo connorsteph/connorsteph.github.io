@@ -23,7 +23,7 @@ permalink: /projects/
 
 ### Machine Learning Theory
 
-[🧭 Pure Exploration in Bandit Problems](/projects/bandits): how to run an experiment as efficiently as possible when there's no explicit penality for exploration (or: the problem setting that gave us [Hyperband](https://arxiv.org/abs/1603.06560)).
+[🧭 Pure Exploration in Bandit Problems](/projects/bandits): how to run an experiment as efficiently as possible when there's no explicit penality for exploration (or: the problem setting that gave the world [Hyperband](https://arxiv.org/abs/1603.06560)).
 
 ### Machine Learning Applications
 
@@ -35,6 +35,6 @@ permalink: /projects/
 
 ### Machine Learning for Structural Biology
 
-[🧬 ATOM-1](https://www.biorxiv.org/content/10.1101/2023.12.13.571579v1): a foundation model which understands the biophysics of structured RNA molecules.
+[🧬 ATOM-1](/projects/atom1): a sequence-to-sequence foundation model for RNA biophysics, and the core of Atomic AI's 3D structure prediction model.
 
 [back to home](/)
