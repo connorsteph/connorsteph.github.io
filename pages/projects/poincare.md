@@ -8,6 +8,7 @@ permalink: /projects/poincare/
 ## Regressing Dynamic System Parameters from Poincare Maps
 
 Preprint [link](https://arxiv.org/pdf/2306.11258.pdf) ($5 CAD prize if you can help us figure out a better title)
+Link to paper [code](https://github.com/connorsteph/parameter_regression_from_return_maps_paper_code)
 
 (I know this page is low on text and a bit eye-burning right now, I'm hoping to come back to this soon! The paper is still going through the journal submission process with all of its wonders)
 
