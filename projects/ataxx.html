@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ataxx Engine - Connor Stephens</title>
+    <meta name="description" content="Playing Ataxx for me, because I'm not very good">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <nav>
+        <a href="/" class="nav-home">Connor Stephens</a>
+        <div class="nav-links">
+            <a href="/projects.html">Projects</a>
+            <a href="/cv.html">CV</a>
+            <a href="https://github.com/connorsteph" target="_blank">GitHub</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>Ataxx Engine</h1>
+            <p class="subtitle">Playing Ataxx for me, because I'm not very good</p>
+        </section>
+
+        <section class="content">
+            <h2>An Interactive Tree Search Demo for Ataxx</h2>
+
+            <p><a href="https://github.com/connorsteph/ataxx_tree_search">Link</a> to github project.</p>
+
+            <p>An Ataxx engine built on the alpha-beta pruning algorithm for minimax search, written in C++ for a graduate course project in the Fall of 2019. Initially just a tree search engine with simple CLI controls to hook into the tournament framework, I've extended the project to include a web server to play Ataxx (against humans or the engine) with point and click controls. The game engine / server can be built in an entirely containerized fashion to make it easier to set up and try. Just clone the repository and run <code>./build.sh && ./run_server.sh</code></p>
+
+            <hr>
+
+            <h3>Ataxx Game Rules</h3>
+
+            <ul>
+                <li>Players alternate turns moving their pieces</li>
+                <li>Pieces can clone (adjacent) or jump (2 squares max)</li>
+                <li>Moving converts all adjacent opponent pieces to your color</li>
+                <li>Game ends when no moves available</li>
+                <li>Most pieces wins</li>
+            </ul>
+
+            <hr>
+
+            <div style="margin: 2rem 0; text-align: center;">
+                <img src="/static/projects/ataxx.png" style="width: 100%; max-width: 600px; height: auto;" alt="Ataxx webserver screenshot" />
+                <p style="margin-top: 1rem; font-style: italic;">A screenshot of the webserver in action. To move, click a square and then click again to move to a new location. When playing against the engine, the engine will display the principle variation (current estimate of optimal play) in the right-hand side display.</p>
+            </div>
+        </section>
+
+        <div class="back-link">
+            <a href="/projects.html">← Back to projects</a>
+        </div>
+    </main>
+</body>
+</html>

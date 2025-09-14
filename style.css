@@ -1,0 +1,384 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Typography */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+    background: #fff;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid #eee;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+.nav-home {
+    font-weight: 600;
+    text-decoration: none;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #666;
+    transition: color 0.2s ease;
+}
+
+.nav-links a:hover {
+    color: #333;
+}
+
+/* Main content */
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Hero section */
+.hero {
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    color: #111;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    font-style: italic;
+}
+
+/* Content sections */
+.content {
+    margin-bottom: 4rem;
+}
+
+.content h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 2.5rem 0 1rem 0;
+    color: #111;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.content h2:first-child {
+    margin-top: 0;
+}
+
+.content p {
+    margin-bottom: 1.5rem;
+    color: #444;
+}
+
+/* Links */
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Project sections */
+.project-category {
+    margin-bottom: 3rem;
+}
+
+.project-category h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    color: #111;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+
+.project-item {
+    margin-bottom: 1.5rem;
+    padding: 1rem 0;
+}
+
+.project-item:last-child {
+    margin-bottom: 0;
+}
+
+.project-link {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #0066cc;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.project-link:hover {
+    text-decoration: underline;
+}
+
+.project-description {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+/* Back link */
+.back-link {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+.back-link a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.back-link a:hover {
+    color: #333;
+    text-decoration: underline;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 1.5rem 1rem;
+    }
+
+    .nav-links {
+        gap: 1.5rem;
+    }
+
+    main {
+        padding: 0 1rem;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+
+    body {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .nav-links {
+        gap: 1rem;
+    }
+
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+}
+
+/* CV-specific styles */
+.cv-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.cv-name {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    color: #111;
+}
+
+.cv-contact-info {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.cv-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #555;
+}
+
+.cv-contact-item a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.cv-contact-item a:hover {
+    text-decoration: underline;
+}
+
+.cv-summary {
+    margin-bottom: 2.5rem;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: #444;
+    text-align: justify;
+}
+
+.cv-section {
+    margin-bottom: 2.5rem;
+}
+
+.cv-section-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    color: #111;
+}
+
+.cv-job {
+    margin-bottom: 2rem;
+}
+
+.cv-job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.5rem;
+}
+
+.cv-company-location {
+    font-weight: 600;
+    color: #111;
+}
+
+.cv-job-title {
+    font-style: italic;
+    margin-bottom: 0.75rem;
+    color: #555;
+}
+
+.cv-job-date {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.cv-subsection {
+    margin-bottom: 1.25rem;
+}
+
+.cv-subsection-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #111;
+}
+
+.cv-subsection ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.cv-subsection li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+    color: #444;
+}
+
+.cv-education-item {
+    margin-bottom: 1.25rem;
+}
+
+.cv-education-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.3rem;
+}
+
+.cv-university {
+    font-weight: 600;
+    color: #111;
+}
+
+.cv-degree {
+    font-style: italic;
+    color: #555;
+}
+
+.cv-publication {
+    margin-bottom: 1.25rem;
+}
+
+.cv-publication-title {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #111;
+}
+
+.cv-publication-details {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #666;
+    margin-left: 0.5rem;
+}
+
+.cv-skills-list {
+    line-height: 1.6;
+    color: #444;
+}
+
+/* CV mobile responsiveness */
+@media (max-width: 768px) {
+    .cv-contact-info {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .cv-job-header,
+    .cv-education-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .cv-name {
+        font-size: 2rem;
+    }
+}

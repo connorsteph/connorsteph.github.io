@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connor Stephens - Resume</title>
+    <meta name="description" content="Resume and professional experience">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <a href="/" class="nav-home">Connor Stephens</a>
+        <div class="nav-links">
+            <a href="/projects.html">Projects</a>
+            <a href="/cv.html">CV</a>
+            <a href="https://github.com/connorsteph" target="_blank">GitHub</a>
+        </div>
+    </nav>
+
+    <main>
+        <header class="cv-header">
+            <h1 class="cv-name">Connor Stephens</h1>
+            <div class="cv-contact-info">
+                <div class="cv-contact-item">
+                    <span>✉</span>
+                    <a href="mailto:[email removed]">[email removed]</a>
+                </div>
+                <div class="cv-contact-item">
+                    <span>🌐</span>
+                    <a href="https://connorsteph.github.io/" target="_blank">connorsteph.github.io</a>
+                </div>
+                <div class="cv-contact-item">
+                    <span>💼</span>
+                    <a href="https://www.linkedin.com/in/connor-james-stephens/" target="_blank">connor-james-stephens</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="cv-summary">
+            Machine Learning Scientist with 2+ years applying ML to drug discovery at Atomic AI. Expertise in 3D structure prediction (geometric deep learning + diffusion / flow-matching) and foundation models for biology with experience building models and workflows for virtual screening, QSAR modeling, and molecular dynamics.
+        </div>
+
+        <section class="cv-section">
+            <h2 class="cv-section-title">Software & Tools</h2>
+            <div class="cv-skills-list">
+                Python, C/C++, JAX, PyTorch, NumPy, pandas, RDKit, OpenMM, scikit-learn, XGBoost, Kubernetes, Docker, Bazel, AWS
+            </div>
+        </section>
+
+        <section class="cv-section">
+            <h2 class="cv-section-title">Work Experience</h2>
+            
+            <div class="cv-job">
+                <div class="cv-job-header">
+                    <span class="cv-company-location">Atomic AI - South San Francisco, CA</span>
+                    <span class="cv-job-date">May 2023 - Present</span>
+                </div>
+                <div class="cv-job-title">Machine Learning Scientist</div>
+                
+                <div class="cv-subsection">
+                    <div class="cv-subsection-title">ML for RNA Structure:</div>
+                    <ul>
+                        <li>Improved the RNA 3D structure prediction accuracy (LDDT) of our flow-matching based model by over 10% through improvements to our data curation and training data pipeline, and developed inference-time guidance methods for structure refinement with user-specified constraints.</li>
+                        <li>Created a SOTA model for RNA in-solution stability prediction, building on our ATOM-1 RNA foundation model embeddings (ATOM-1 paper).</li>
+                    </ul>
+                </div>
+                
+                <div class="cv-subsection">
+                    <div class="cv-subsection-title">Drug Discovery & Virtual Screening:</div>
+                    <ul>
+                        <li>Built QSAR / ADMET models for hit-to-lead and lead optimization (median AUC > 0.8 over internal time-split), trained on combined internal and external data pipeline with augmented Morgan fingerprints to improve features for geometric isomers. Wrote and deployed a chemist-facing webapp for serving and visualizing model predictions.</li>
+                        <li>Led the development, benchmarking and deployment of our structure-based virtual screening pipeline: built a scalable and fault-tolerant docking workflow on Kubernetes/AWS for use in high-throughput screening by our chemistry team.</li>
+                    </ul>
+                </div>
+                
+                <div class="cv-subsection">
+                    <div class="cv-subsection-title">Infrastructure & Deployment:</div>
+                    <ul>
+                        <li>Contributed to core ML / Scientific Computing infrastructure: custom Bazel rules for Docker containers, RNA MSA generation pipeline, extending internal Argo-like tooling with deployable python-based workflows.</li>
+                        <li>Created platform tools used daily: an AMBER-like molecular dynamics library using OpenMM, and an interactive RNA structure database and analysis web-app integrating wet-lab data with internal structure predictions in a Molstar structure viewer.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="cv-section">
+            <h2 class="cv-section-title">Education</h2>
+            
+            <div class="cv-education-item">
+                <div class="cv-education-header">
+                    <span class="cv-university">University of Alberta</span>
+                    <span class="cv-job-date">2019 - 2022</span>
+                </div>
+                <div class="cv-degree">M.Sc. Computing Science (Statistical ML), Thesis: Pure Exploration in Multi-Armed Bandits</div>
+            </div>
+            
+            <div class="cv-education-item">
+                <div class="cv-education-header">
+                    <span class="cv-university">University of Alberta</span>
+                    <span class="cv-job-date">2014 - 2018</span>
+                </div>
+                <div class="cv-degree">B.Sc. Honors Physics</div>
+            </div>
+        </section>
+
+        <section class="cv-section">
+            <h2 class="cv-section-title">Selected Publications</h2>
+            
+            <div class="cv-publication">
+                <div class="cv-publication-title">ATOM-1: a foundation model for RNA structure and function built on chemical mapping data</div>
+                <div class="cv-publication-details">December 2023</div>
+                <div class="cv-publication-details">White paper, core contributor</div>
+            </div>
+            
+            <div class="cv-publication">
+                <div class="cv-publication-title">Deep Learning of Dynamical System Parameters from Return Maps as Images</div>
+                <div class="cv-publication-details">June 2023</div>
+                <div class="cv-publication-details">First author, pre-print</div>
+            </div>
+            
+            <div class="cv-publication">
+                <div class="cv-publication-title">Revisiting Simple Regret Minimization in Multi-Armed Bandits</div>
+                <div class="cv-publication-details">October 2022</div>
+                <div class="cv-publication-details">Second author, ICML 2022</div>
+            </div>
+        </section>
+
+        <div class="back-link">
+            <a href="/">← Back to home</a>
+        </div>
+    </main>
+</body>
+</html>
