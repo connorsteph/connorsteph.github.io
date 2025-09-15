@@ -11,8 +11,9 @@
 <body>
     <div id="nav-placeholder"></div>
 
-    <main>
-        <header class="cv-header">
+    <header class="cv-header">
+        <canvas id="henonCanvas" data-system="henon"></canvas>
+        <div class="cv-header-overlay">
             <h1 class="cv-name">Connor Stephens</h1>
             <div class="cv-contact-info">
                 <div class="cv-contact-item">
@@ -24,7 +25,10 @@
                     <a href="https://www.linkedin.com/in/connor-james-stephens/" target="_blank">connor-james-stephens</a>
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
+
+    <main>
 
         <div class="cv-summary">
             Machine Learning Scientist with 2+ years applying ML to drug discovery at Atomic AI. Expertise in 3D structure prediction (geometric deep learning + diffusion / flow-matching) and foundation models for biology with experience building models and workflows for virtual screening, QSAR modeling, and molecular dynamics.
@@ -123,5 +127,7 @@
     <!-- Component system -->
     <script src="/js/nav.js"></script>
     <script src="/js/components.js"></script>
+    <script src="/js/systems.js"></script>
+    <script src="/js/header.js"></script>
 </body>
 </html>

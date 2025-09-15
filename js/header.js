@@ -1,10 +1,28 @@
-// --- CONFIGURATION ---
-// CHOOSE WHICH SYSTEM TO RUN HERE!
-const activeSystem = DYNAMICAL_SYSTEMS.tinkerbell; // Or DYNAMICAL_SYSTEMS.deJong
+// --- UNIFIED HEADER SYSTEM ---
+// Auto-detects canvas and system type via data-system attribute
 
 // --- Element Setup ---
-const header = document.querySelector('.dynamic-header');
-const canvas = document.getElementById('tinkerbellCanvas');
+const header = document.querySelector('.cv-header') || document.querySelector('.dynamic-header');
+const canvas = header.querySelector('canvas');
+
+if (!canvas) {
+    console.error('No canvas found in header');
+    throw new Error('Canvas element required in header');
+}
+
+if (!canvas.dataset.system) {
+    console.error('No data-system attribute found on canvas');
+    throw new Error('Canvas must have data-system attribute (e.g., data-system="henon")');
+}
+
+const systemName = canvas.dataset.system;
+const activeSystem = DYNAMICAL_SYSTEMS[systemName];
+
+if (!activeSystem) {
+    console.error(`System "${systemName}" not found in DYNAMICAL_SYSTEMS`);
+    throw new Error(`Unknown system: ${systemName}`);
+}
+
 const ctx = canvas.getContext('2d');
 const backgroundColor = '#0c0c0c';
 
@@ -59,7 +77,7 @@ function animate(currentTime) {
     // Process each trajectory using the system's update function
     for (let i = 0; i < trajectories.length; i++) {
         const p = trajectories[i];
-        
+
         const { x: x_next, y: y_next } = activeSystem.updateFunction(p, currentParams);
         p.x = x_next;
         p.y = y_next;
@@ -72,7 +90,7 @@ function animate(currentTime) {
         if (!isFinite(p.x) || !isFinite(p.y) ||
             canvasX < -resetThreshold || canvasX > canvas.width + resetThreshold ||
             canvasY < -resetThreshold || canvasY > canvas.height + resetThreshold) {
-            
+
             const { x, y } = activeSystem.initialConditions();
             p.x = x;
             p.y = y;

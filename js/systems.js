@@ -95,6 +95,38 @@ const DYNAMICAL_SYSTEMS = {
             const lightness = (j / totalJ) * 40 + 30; // 30% to 70%
             return `hsla(${hue}, 80%, ${lightness}%, 0.8)`;
         }
+    },
+
+    clifford: {
+        name: "Clifford Attractor",
+
+        updateFunction: (p, params) => {
+            const x_next = Math.sin(params.a * p.y) + params.c * Math.cos(params.a * p.x);
+            const y_next = Math.sin(params.b * p.x) + params.d * Math.cos(params.b * p.y);
+            return { x: x_next, y: y_next };
+        },
+
+        evolution: {
+            a: { center: -1.4, range: 0.3, speed: 0.0001, func: Math.sin },
+            b: { center: 1.6, range: 0.2, speed: 0.00012, func: Math.cos },
+            c: { center: 1.0, range: 0.4, speed: 0.00015, func: Math.sin },
+            d: { center: 0.7, range: 0.3, speed: 0.0002, func: Math.cos },
+        },
+
+        mapRange: { xMin: -3, xMax: 3, yMin: -3, yMax: 3 },
+
+        initialConditions: () => {
+            return {
+                x: Math.random() * 2 - 1,
+                y: Math.random() * 2 - 1,
+            };
+        },
+
+        colorFunction: (i, j, totalI, totalJ) => {
+            const hue = (i / totalI) * 120 + 240; // Blue to magenta range
+            const saturation = (j / totalJ) * 30 + 70; // 70% to 100%
+            return `hsla(${hue}, ${saturation}%, 65%, 0.6)`;
+        }
     }
-    // You can add more systems here: Clifford, Ikeda, Lozi, etc.
+    // You can add more systems here: Ikeda, Lozi, etc.
 };
