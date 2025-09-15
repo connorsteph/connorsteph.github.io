@@ -31,18 +31,18 @@
                 <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
                     <div style="flex: 1; min-width: 300px;">
                         <p><strong>Figure 1:</strong> Real-time construction of <a href="https://en.wikipedia.org/wiki/Poincar%C3%A9_map">Poincare maps</a> for the <a href="https://en.wikipedia.org/wiki/Swinging_Atwood%27s_machine">Swinging Atwood's Machine (SAM)</a> in a stable (red) and chaotic (green) configuration. On the left is the system configuration, on the right is the Poincare-Map representation of the system.</p>
-                        <img src="https://user-images.githubusercontent.com/24722905/189714592-308d97c2-d428-454f-a52a-eb120572404a.gif" style="width: 100%; height: auto;" alt="Real-time construction of Poincare maps" />
+                        <img src="/static/projects/poincare/poincare_realtime.gif" style="width: 100%; height: auto;" alt="Real-time construction of Poincare maps" />
                     </div>
                     <div style="flex: 1; min-width: 300px;">
                         <p><strong>Figure 2:</strong> Sampled Poincare maps for the Swinging Atwood's Machine (colours correspond to trajectories from different initial configurations) for various values of the system's mass-ratio parameter, μ.</p>
-                        <img src="https://user-images.githubusercontent.com/24722905/189714680-f54d6c14-bdc2-428c-a57b-da7816f28378.png" style="width: 100%; height: auto;" alt="Sampled Poincare maps" />
+                        <img src="/static/projects/poincare/poincare_sampled.png" style="width: 100%; height: auto;" alt="Sampled Poincare maps" />
                     </div>
                 </div>
             </div>
 
             <div style="width: 100%; margin: 2rem 0;">
                 <p><strong>Figure 3:</strong> An example input-output for a ResNet trained to estimate the mass ratio parameter of the SAM system which produced the Poincare map (left) input to the network. On the right is the parameter estimate, along with a higher quality (trajectories integrated from more initial conditions, for longer) Poincare map corresponding to the network's estimated parameter.</p>
-                <img src="https://user-images.githubusercontent.com/24722905/189736428-af463574-c211-495a-80a5-b8302fbd1ac9.png" style="width: 100%; height: auto;" alt="ResNet input-output example" />
+                <img src="/static/projects/poincare/resnet_example.png" style="width: 100%; height: auto;" alt="ResNet input-output example" />
             </div>
         </section>
 
@@ -52,7 +52,7 @@
     </main>
 
     <!-- Component system -->
-    <script src="../components/nav.js"></script>
+    <script src="../js/nav.js"></script>
     <script src="../js/components.js"></script>
 </body>
 </html>
