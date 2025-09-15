@@ -32,6 +32,25 @@ const DYNAMICAL_SYSTEMS = {
         colorFunction: (i, j, totalI, totalJ) => {
             const hue = (i + j) / (totalI + totalJ) * 360;
             return `hsla(${hue}, 90%, 60%, 0.7)`;
+        },
+
+        // Control configuration for interactive UI
+        controls: {
+            layout: {
+                panelWidth: 420,
+                paramColumns: "90px 1fr 65px",
+                rangeColumns: "60px 1fr 65px"
+            },
+            mapRange: {
+                x: { min: -3, max: 2, step: 0.1 },
+                y: { min: -3, max: 2, step: 0.1 }
+            },
+            parameters: {
+                a: { min: 0.5, max: 1.5, step: 0.01 },
+                b: { min: -1, max: 0, step: 0.01 },
+                c: { min: 1.5, max: 2.5, step: 0.01 },
+                d: { min: 0.2, max: 0.8, step: 0.01 }
+            }
         }
     },
 
@@ -64,6 +83,25 @@ const DYNAMICAL_SYSTEMS = {
             const hue = (i / totalI) * 180 + 180; // Hues from cyan to magenta
             const lightness = (j / totalJ) * 40 + 30; // 30% to 70%
             return `hsla(${hue}, 95%, ${lightness}%, 0.7)`;
+        },
+
+        // Control configuration for interactive UI
+        controls: {
+            layout: {
+                panelWidth: 450,
+                paramColumns: "90px 1fr 65px",
+                rangeColumns: "60px 1fr 65px"
+            },
+            mapRange: {
+                x: { min: -5, max: 5, step: 0.1 },
+                y: { min: -5, max: 5, step: 0.1 }
+            },
+            parameters: {
+                a: { min: 0.5, max: 2.5, step: 0.01 },
+                b: { min: -3, max: -1, step: 0.01 },
+                c: { min: 1, max: 3, step: 0.01 },
+                d: { min: -3, max: -1, step: 0.01 }
+            }
         }
     },
 
@@ -94,6 +132,23 @@ const DYNAMICAL_SYSTEMS = {
             const hue = Math.floor((i / totalI) * 180 + 180); // Hues from 180 to 360
             const lightness = (j / totalJ) * 40 + 30; // 30% to 70%
             return `hsla(${hue}, 80%, ${lightness}%, 0.8)`;
+        },
+
+        // Control configuration for interactive UI
+        controls: {
+            layout: {
+                panelWidth: 380,
+                paramColumns: "90px 1fr 65px",
+                rangeColumns: "60px 1fr 65px"
+            },
+            mapRange: {
+                x: { min: -10, max: 10, step: 0.1 },
+                y: { min: -2, max: 2, step: 0.05 }
+            },
+            parameters: {
+                a: { min: 0.8, max: 1.6, step: 0.01 },
+                b: { min: 0.1, max: 0.5, step: 0.01 }
+            }
         }
     },
 
@@ -126,6 +181,25 @@ const DYNAMICAL_SYSTEMS = {
             const hue = (i / totalI) * 120 + 240; // Blue to magenta range
             const saturation = (j / totalJ) * 30 + 70; // 70% to 100%
             return `hsla(${hue}, ${saturation}%, 65%, 0.6)`;
+        },
+
+        // Control configuration for interactive UI
+        controls: {
+            layout: {
+                panelWidth: 450,
+                paramColumns: "90px 1fr 65px",
+                rangeColumns: "60px 1fr 65px"
+            },
+            mapRange: {
+                x: { min: -6, max: 6, step: 0.1 },
+                y: { min: -6, max: 6, step: 0.1 }
+            },
+            parameters: {
+                a: { min: -2, max: 0, step: 0.01 },
+                b: { min: 1, max: 2.5, step: 0.01 },
+                c: { min: 0.5, max: 1.5, step: 0.01 },
+                d: { min: 0.2, max: 1.2, step: 0.01 }
+            }
         }
     }
     // You can add more systems here: Ikeda, Lozi, etc.
