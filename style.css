@@ -5,14 +5,59 @@
     box-sizing: border-box;
 }
 
+/* CSS Variables for theming */
+:root {
+    --bg-color: #fff;
+    --text-color: #333;
+    --text-secondary: #444;
+    --text-muted: #555;
+    --text-light: #666;
+    --border-color: #eee;
+    --border-light: #e9ecef;
+    --border-medium: #dee2e6;
+    --nav-bg: rgba(255, 255, 255, 0.95);
+    --nav-text: #333;
+    --nav-text-muted: #666;
+    --sidebar-bg: #f8f9fa;
+    --sidebar-border: #e9ecef;
+    --link-color: #0066cc;
+    --link-hover: #0066cc;
+    --section-title: #111;
+    --content-bg: #fff;
+    --special-bg: #f1f3f4;
+}
+
+/* Dark mode variables */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --text-secondary: #c0c0c0;
+    --text-muted: #a0a0a0;
+    --text-light: #888;
+    --border-color: #333;
+    --border-light: #404040;
+    --border-medium: #505050;
+    --nav-bg: rgba(26, 26, 26, 0.95);
+    --nav-text: #e0e0e0;
+    --nav-text-muted: #a0a0a0;
+    --sidebar-bg: #2a2a2a;
+    --sidebar-border: #404040;
+    --link-color: #66b3ff;
+    --link-hover: #4da6ff;
+    --section-title: #f0f0f0;
+    --content-bg: #1a1a1a;
+    --special-bg: #333;
+}
+
 /* Typography */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     font-size: 18px;
     line-height: 1.6;
-    color: #333;
-    background: #fff;
+    color: var(--text-color);
+    background: var(--bg-color);
     padding-top: 80px;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Navigation */
@@ -21,19 +66,20 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0;
-    border-bottom: 1px solid #eee;
-    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid var(--border-color);
+    background: var(--nav-bg);
     backdrop-filter: blur(10px);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .nav-container {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     max-width: 800px;
     margin: 0 auto;
@@ -44,23 +90,58 @@ nav {
 .nav-home {
     font-weight: 600;
     text-decoration: none;
-    color: #333;
+    color: var(--nav-text);
     font-size: 1.1rem;
+    transition: color 0.3s ease;
 }
 
 .nav-links {
     display: flex;
     gap: 2rem;
+    grid-column: 2;
+    justify-self: center;
 }
 
 .nav-links a {
     text-decoration: none;
-    color: #666;
+    color: var(--nav-text-muted);
     transition: color 0.2s ease;
 }
 
 .nav-links a:hover {
-    color: #333;
+    color: var(--nav-text);
+}
+
+/* Dark mode toggle */
+.dark-mode-toggle {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    transition: all 0.3s ease;
+    color: var(--nav-text);
+    grid-column: 3;
+    justify-self: end;
+}
+
+.dark-mode-toggle:hover {
+    background: var(--border-color);
+    transform: scale(1.05);
+}
+
+.dark-mode-icon {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+[data-theme="dark"] .dark-mode-icon {
+    transform: rotate(180deg);
 }
 
 /* Main content */
@@ -83,23 +164,30 @@ main {
 }
 
 .projects-sidebar {
-    background: #f8f9fa;
+    background: var(--sidebar-bg);
     border-radius: 8px;
     padding: 2rem;
-    border: 1px solid #e9ecef;
+    border: 1px solid var(--sidebar-border);
     position: sticky;
     top: 2rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Dynamic header */
-.dynamic-header {
+/* Base header class for unified styling */
+.base-header {
     width: 100%;
     aspect-ratio: 5 / 1;
     max-height: 250px;
     position: relative;
-    background-color: #0c0c0c;
     margin-bottom: 2rem;
     overflow: visible;
+    background-color: var(--header-bg-color, #0c0c0c);
+    border-bottom: var(--header-border, none);
+}
+
+/* Dynamic header */
+.dynamic-header {
+    --header-bg-color: #0c0c0c;
 }
 
 .dynamic-header::after {
@@ -115,8 +203,7 @@ main {
 }
 
 /* Canvas elements in headers should be clipped to header boundaries */
-.dynamic-header canvas,
-.cv-header canvas {
+.base-header canvas {
     position: absolute;
     top: 0;
     left: 0;
@@ -181,25 +268,64 @@ main {
 }
 
 .controls-panel {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.85);
     padding: 1rem;
     border-radius: 8px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     gap: 1rem;
     transition: opacity 0.3s ease, transform 0.3s ease;
     position: fixed;
-    top: 100px;
+    top: 80px;
     right: 10px;
-    z-index: 25;
+    z-index: 1001;
     min-width: 280px;
     max-width: 320px;
 }
 
 .controls-panel.hidden {
     display: none;
+}
+
+.controls-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.controls-header h4 {
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.close-controls {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    z-index: 1002;
+}
+
+.close-controls:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
 }
 
 
@@ -283,7 +409,7 @@ main {
 
     .controls-panel {
         padding: 0.8rem;
-        top: 90px;
+        top: 80px;
         right: 5px;
         min-width: 240px;
         max-width: calc(100vw - 20px);
@@ -316,9 +442,10 @@ main {
     font-size: 1.5rem;
     font-weight: 500;
     margin: 2.5rem 0 1rem 0;
-    color: #111;
-    border-bottom: 1px solid #eee;
+    color: var(--section-title);
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.5rem;
+    transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .content h2:first-child {
@@ -327,16 +454,19 @@ main {
 
 .content p {
     margin-bottom: 1.5rem;
-    color: #444;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
 }
 
 /* Links */
 a {
-    color: #0066cc;
+    color: var(--link-color);
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 a:hover {
+    color: var(--link-hover);
     text-decoration: underline;
 }
 
@@ -349,9 +479,10 @@ a:hover {
     font-size: 1.5rem;
     font-weight: 500;
     margin-bottom: 1.5rem;
-    color: #111;
-    border-bottom: 1px solid #eee;
+    color: var(--section-title);
+    border-bottom: 1px solid var(--border-color);
     padding-bottom: 0.5rem;
+    transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .project-item {
@@ -366,10 +497,11 @@ a:hover {
 .project-link {
     font-size: 1.1rem;
     font-weight: 500;
-    color: #0066cc;
+    color: var(--link-color);
     text-decoration: none;
     display: block;
     margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
 }
 
 .project-link:hover {
@@ -377,26 +509,29 @@ a:hover {
 }
 
 .project-description {
-    color: #555;
+    color: var(--text-muted);
     font-size: 0.95rem;
+    transition: color 0.3s ease;
 }
 
 /* Back link */
 .back-link {
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--border-color);
     text-align: center;
+    transition: border-color 0.3s ease;
 }
 
 .back-link a {
-    color: #666;
+    color: var(--nav-text-muted);
     text-decoration: none;
     font-size: 0.9rem;
+    transition: color 0.3s ease;
 }
 
 .back-link a:hover {
-    color: #333;
+    color: var(--nav-text);
     text-decoration: underline;
 }
 
@@ -405,35 +540,39 @@ a:hover {
     font-size: 1.3rem;
     font-weight: 500;
     margin-bottom: 1.5rem;
-    color: #111;
-    border-bottom: 1px solid #dee2e6;
+    color: var(--section-title);
+    border-bottom: 1px solid var(--border-medium);
     padding-bottom: 0.5rem;
+    transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .sidebar-project-item {
     margin-bottom: 1.25rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 1px solid var(--border-light);
+    transition: border-color 0.3s ease;
 }
 
 .sidebar-project-item:last-child {
     margin-bottom: 0;
     border-bottom: none;
     padding-bottom: 0;
-    background: #f1f3f4;
+    background: var(--special-bg);
     border-radius: 6px;
     padding: 1rem;
     margin-top: 0.5rem;
+    transition: background-color 0.3s ease;
 }
 
 .sidebar-project-link {
     font-size: 1rem;
     font-weight: 500;
-    color: #0066cc;
+    color: var(--link-color);
     text-decoration: none;
     display: block;
     margin-bottom: 0.5rem;
     line-height: 1.3;
+    transition: color 0.3s ease;
 }
 
 .sidebar-project-link:hover {
@@ -441,13 +580,14 @@ a:hover {
 }
 
 .sidebar-project-description {
-    color: #555;
+    color: var(--text-muted);
     font-size: 0.85rem;
     line-height: 1.4;
+    transition: color 0.3s ease;
 }
 
 .sidebar-project-item:last-child .sidebar-project-link {
-    color: #0066cc;
+    color: var(--link-color);
     font-weight: 600;
 }
 
@@ -458,10 +598,22 @@ a:hover {
     }
 
     .nav-container {
+        display: flex;
         flex-direction: column;
         gap: 1rem;
         text-align: center;
         padding: 1.5rem 1rem;
+    }
+
+    .nav-links {
+        grid-column: unset;
+        justify-self: unset;
+    }
+
+    .dark-mode-toggle {
+        grid-column: unset;
+        justify-self: unset;
+        align-self: center;
     }
 
     .nav-links {
@@ -472,7 +624,7 @@ a:hover {
         padding: 0 1rem;
     }
 
-    .dynamic-header {
+    .base-header {
         aspect-ratio: 3 / 1;
         max-height: 180px;
         margin-bottom: 1.5rem;
@@ -518,14 +670,8 @@ a:hover {
 
 /* CV-specific styles */
 .cv-header {
-    width: 100%;
-    aspect-ratio: 5 / 1;
-    max-height: 250px;
-    position: relative;
-    background-color: #1a1a1a;
-    margin-bottom: 2rem;
-    overflow: visible;
-    border-bottom: 1px solid #eee;
+    --header-bg-color: #1a1a1a;
+    --header-border: 1px solid var(--border-color);
 }
 
 #dejongCanvas {
@@ -536,14 +682,6 @@ a:hover {
     height: 100%;
 }
 
-.cv-header-overlay {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 20;
-    text-align: center;
-}
 
 .cv-name {
     font-size: 2.5rem;
@@ -565,11 +703,11 @@ a:hover {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #ddd;
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .cv-contact-item a {
-    color: #66ccff;
+    color: rgba(255, 255, 255, 0.95);
     text-decoration: none;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
 }
@@ -582,8 +720,9 @@ a:hover {
     margin-bottom: 2.5rem;
     font-size: 1.05rem;
     line-height: 1.6;
-    color: #444;
+    color: var(--text-secondary);
     text-align: justify;
+    transition: color 0.3s ease;
 }
 
 .cv-section {
@@ -593,10 +732,11 @@ a:hover {
 .cv-section-title {
     font-size: 1.5rem;
     font-weight: 500;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--border-color);
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
-    color: #111;
+    color: var(--section-title);
+    transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .cv-job {
@@ -612,19 +752,22 @@ a:hover {
 
 .cv-company-location {
     font-weight: 600;
-    color: #111;
+    color: var(--section-title);
+    transition: color 0.3s ease;
 }
 
 .cv-job-title {
     font-style: italic;
     margin-bottom: 0.75rem;
-    color: #555;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
 }
 
 .cv-job-date {
     font-style: italic;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-light);
+    transition: color 0.3s ease;
 }
 
 .cv-subsection {
@@ -634,7 +777,8 @@ a:hover {
 .cv-subsection-title {
     font-weight: 600;
     margin-bottom: 0.5rem;
-    color: #111;
+    color: var(--section-title);
+    transition: color 0.3s ease;
 }
 
 .cv-subsection ul {
@@ -646,7 +790,8 @@ a:hover {
 .cv-subsection li {
     margin-bottom: 0.5rem;
     line-height: 1.5;
-    color: #444;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
 }
 
 .cv-education-item {
@@ -662,12 +807,14 @@ a:hover {
 
 .cv-university {
     font-weight: 600;
-    color: #111;
+    color: var(--section-title);
+    transition: color 0.3s ease;
 }
 
 .cv-degree {
     font-style: italic;
-    color: #555;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
 }
 
 .cv-publication {
@@ -677,19 +824,22 @@ a:hover {
 .cv-publication-title {
     font-weight: 600;
     margin-bottom: 0.3rem;
-    color: #111;
+    color: var(--section-title);
+    transition: color 0.3s ease;
 }
 
 .cv-publication-details {
     font-style: italic;
     font-size: 0.9rem;
-    color: #666;
+    color: var(--text-light);
     margin-left: 0.5rem;
+    transition: color 0.3s ease;
 }
 
 .cv-skills-list {
     line-height: 1.6;
-    color: #444;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
 }
 
 /* CV mobile responsiveness */
@@ -738,56 +888,6 @@ a:hover {
     background: rgba(0, 0, 0, 0.85);
 }
 
-.controls-panel {
-    position: fixed;
-    top: 80px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-    padding: 16px;
-    border-radius: 8px;
-    min-width: 280px;
-    max-width: 320px;
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    z-index: 1001;
-}
-
-.controls-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.controls-panel h4 {
-    margin: 0;
-    font-size: 14px;
-    font-weight: 600;
-    opacity: 0.9;
-}
-
-.close-controls {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 18px;
-    cursor: pointer;
-    padding: 0;
-    width: 20px;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-}
-
-.close-controls:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-}
 
 .control-group {
     margin-bottom: 16px;

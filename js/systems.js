@@ -12,9 +12,9 @@ const DYNAMICAL_SYSTEMS = {
         // Defines how parameters evolve over time
         evolution: {
             a: { center: 0.92, range: 0.08, speed: 0.00008, func: Math.sin },
-            b: { center: -0.6013, range: 0.05, speed: 0.00012, func: Math.cos },
-            c: { center: 2.0, range: 0.15, speed: 0.00015, func: Math.sin },
-            d: { center: 0.55, range: 0.08, speed: 0.0002, func: Math.cos },
+            b: { center: -0.58, range: 0.05, speed: 0.00012, func: Math.cos },
+            c: { center: 1.62, range: 0.15, speed: 0.00015, func: Math.sin },
+            d: { center: 0.64, range: 0.08, speed: 0.0002, func: Math.cos },
         },
 
         // The "camera" view for this attractor
@@ -54,8 +54,8 @@ const DYNAMICAL_SYSTEMS = {
 
         evolution: {
             a: { center: 1.4, range: 0.2, speed: 0.0001, func: Math.sin },
-            b: { center: -2.3, range: 0.2, speed: 0.00015, func: Math.cos },
-            c: { center: 2.4, range: 0.3, speed: 0.0002, func: Math.sin },
+            b: { center: -2.02, range: 0.2, speed: 0.00015, func: Math.cos },
+            c: { center: 2.70, range: 0.3, speed: 0.0002, func: Math.sin },
             d: { center: -2.1, range: 0.3, speed: 0.00025, func: Math.cos },
         },
         
@@ -127,8 +127,8 @@ const DYNAMICAL_SYSTEMS = {
         },
 
         evolution: {
-            a: { center: -1.4, range: 0.3, speed: 0.0001, func: Math.sin },
-            b: { center: 1.6, range: 0.2, speed: 0.00012, func: Math.cos },
+            a: { center: -1.55, range: 0.3, speed: 0.0001, func: Math.sin },
+            b: { center: 1.18, range: 0.2, speed: 0.00012, func: Math.cos },
             c: { center: 1.0, range: 0.4, speed: 0.00015, func: Math.sin },
             d: { center: 0.7, range: 0.3, speed: 0.0002, func: Math.cos },
         },

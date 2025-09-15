@@ -195,10 +195,15 @@ function resetParameters() {
 // Set up event listeners
 document.addEventListener('DOMContentLoaded', () => {
     const toggleButton = document.getElementById('toggleControls');
+    const closeButton = document.getElementById('closeControls');
     const resetButton = document.getElementById('resetParams');
 
     if (toggleButton) {
         toggleButton.addEventListener('click', toggleControls);
+    }
+
+    if (closeButton) {
+        closeButton.addEventListener('click', toggleControls);
     }
 
     if (resetButton) {
