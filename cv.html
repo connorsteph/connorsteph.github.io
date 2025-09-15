@@ -11,9 +11,9 @@
 <body>
     <div id="nav-placeholder"></div>
 
-    <header class="cv-header">
-        <canvas id="henonCanvas" data-system="henon" data-controls="true"></canvas>
-        <div class="cv-header-overlay">
+    <header class="base-header cv-header">
+        <canvas id="cliffordCanvas" data-system="clifford"></canvas>
+        <div class="header-overlay">
             <h1 class="cv-name">Connor Stephens</h1>
             <div class="cv-contact-info">
                 <div class="cv-contact-item">
@@ -23,6 +23,19 @@
                 <div class="cv-contact-item">
                     <span>💼</span>
                     <a href="https://www.linkedin.com/in/connor-james-stephens/" target="_blank">connor-james-stephens</a>
+                </div>
+            </div>
+            <div class="header-controls">
+                <button id="toggleControls" class="toggle-controls-button">Show Controls</button>
+                <div id="controlsPanel" class="controls-panel hidden">
+                    <div class="controls-header">
+                        <h4>Dynamics Controls</h4>
+                        <button id="closeControls" class="close-controls">×</button>
+                    </div>
+                    <div id="parameterControls" class="parameter-controls">
+                        <!-- Parameter sliders will be dynamically generated -->
+                    </div>
+                    <button id="resetParams" class="reset-button">Reset Parameters</button>
                 </div>
             </div>
         </div>
@@ -125,6 +138,7 @@
     </main>
 
     <!-- Component system -->
+    <script src="/js/darkmode.js"></script>
     <script src="/js/nav.js"></script>
     <script src="/js/components.js"></script>
     <script src="/js/systems.js"></script>

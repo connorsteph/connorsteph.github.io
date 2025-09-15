@@ -12,9 +12,9 @@ const DYNAMICAL_SYSTEMS = {
         // Defines how parameters evolve over time
         evolution: {
             a: { center: 0.92, range: 0.08, speed: 0.00008, func: Math.sin },
-            b: { center: -0.6013, range: 0.05, speed: 0.00012, func: Math.cos },
-            c: { center: 2.0, range: 0.15, speed: 0.00015, func: Math.sin },
-            d: { center: 0.55, range: 0.08, speed: 0.0002, func: Math.cos },
+            b: { center: -0.58, range: 0.05, speed: 0.00012, func: Math.cos },
+            c: { center: 1.62, range: 0.15, speed: 0.00015, func: Math.sin },
+            d: { center: 0.64, range: 0.08, speed: 0.0002, func: Math.cos },
         },
 
         // The "camera" view for this attractor
@@ -25,7 +25,7 @@ const DYNAMICAL_SYSTEMS = {
             return {
                 x: Math.random() * 0.5 - 0.25,
                 y: Math.random() * 0.5 - 0.25,
-            };
+        };
         },
         
         // How to color the points
@@ -34,23 +34,12 @@ const DYNAMICAL_SYSTEMS = {
             return `hsla(${hue}, 90%, 60%, 0.7)`;
         },
 
-        // Control configuration for interactive UI
+        // Interactive controls configuration
         controls: {
-            layout: {
-                panelWidth: 420,
-                paramColumns: "90px 1fr 65px",
-                rangeColumns: "60px 1fr 65px"
-            },
-            mapRange: {
-                x: { min: -3, max: 2, step: 0.1 },
-                y: { min: -3, max: 2, step: 0.1 }
-            },
-            parameters: {
-                a: { min: 0.5, max: 1.5, step: 0.01 },
-                b: { min: -1, max: 0, step: 0.01 },
-                c: { min: 1.5, max: 2.5, step: 0.01 },
-                d: { min: 0.2, max: 0.8, step: 0.01 }
-            }
+            a: { min: 0.5, max: 1.3, step: 0.01, label: "Parameter A" },
+            b: { min: -1.0, max: -0.2, step: 0.01, label: "Parameter B" },
+            c: { min: 1.5, max: 2.5, step: 0.01, label: "Parameter C" },
+            d: { min: 0.2, max: 0.9, step: 0.01, label: "Parameter D" }
         }
     },
 
@@ -65,8 +54,8 @@ const DYNAMICAL_SYSTEMS = {
 
         evolution: {
             a: { center: 1.4, range: 0.2, speed: 0.0001, func: Math.sin },
-            b: { center: -2.3, range: 0.2, speed: 0.00015, func: Math.cos },
-            c: { center: 2.4, range: 0.3, speed: 0.0002, func: Math.sin },
+            b: { center: -2.02, range: 0.2, speed: 0.00015, func: Math.cos },
+            c: { center: 2.70, range: 0.3, speed: 0.0002, func: Math.sin },
             d: { center: -2.1, range: 0.3, speed: 0.00025, func: Math.cos },
         },
         
@@ -85,23 +74,11 @@ const DYNAMICAL_SYSTEMS = {
             return `hsla(${hue}, 95%, ${lightness}%, 0.7)`;
         },
 
-        // Control configuration for interactive UI
         controls: {
-            layout: {
-                panelWidth: 450,
-                paramColumns: "90px 1fr 65px",
-                rangeColumns: "60px 1fr 65px"
-            },
-            mapRange: {
-                x: { min: -5, max: 5, step: 0.1 },
-                y: { min: -5, max: 5, step: 0.1 }
-            },
-            parameters: {
-                a: { min: 0.5, max: 2.5, step: 0.01 },
-                b: { min: -3, max: -1, step: 0.01 },
-                c: { min: 1, max: 3, step: 0.01 },
-                d: { min: -3, max: -1, step: 0.01 }
-            }
+            a: { min: 0.8, max: 2.0, step: 0.01, label: "Parameter A" },
+            b: { min: -3.0, max: -1.5, step: 0.01, label: "Parameter B" },
+            c: { min: 1.8, max: 3.0, step: 0.01, label: "Parameter C" },
+            d: { min: -2.8, max: -1.4, step: 0.01, label: "Parameter D" }
         }
     },
 
@@ -134,21 +111,9 @@ const DYNAMICAL_SYSTEMS = {
             return `hsla(${hue}, 80%, ${lightness}%, 0.8)`;
         },
 
-        // Control configuration for interactive UI
         controls: {
-            layout: {
-                panelWidth: 380,
-                paramColumns: "90px 1fr 65px",
-                rangeColumns: "60px 1fr 65px"
-            },
-            mapRange: {
-                x: { min: -10, max: 10, step: 0.1 },
-                y: { min: -2, max: 2, step: 0.05 }
-            },
-            parameters: {
-                a: { min: 0.8, max: 1.6, step: 0.01 },
-                b: { min: 0.1, max: 0.5, step: 0.01 }
-            }
+            a: { min: 0.8, max: 1.6, step: 0.01, label: "Parameter A" },
+            b: { min: 0.1, max: 0.5, step: 0.01, label: "Parameter B" }
         }
     },
 
@@ -162,8 +127,8 @@ const DYNAMICAL_SYSTEMS = {
         },
 
         evolution: {
-            a: { center: -1.4, range: 0.3, speed: 0.0001, func: Math.sin },
-            b: { center: 1.6, range: 0.2, speed: 0.00012, func: Math.cos },
+            a: { center: -1.55, range: 0.3, speed: 0.0001, func: Math.sin },
+            b: { center: 1.18, range: 0.2, speed: 0.00012, func: Math.cos },
             c: { center: 1.0, range: 0.4, speed: 0.00015, func: Math.sin },
             d: { center: 0.7, range: 0.3, speed: 0.0002, func: Math.cos },
         },
@@ -178,28 +143,17 @@ const DYNAMICAL_SYSTEMS = {
         },
 
         colorFunction: (i, j, totalI, totalJ) => {
-            const hue = (i / totalI) * 120 + 240; // Blue to magenta range
-            const saturation = (j / totalJ) * 30 + 70; // 70% to 100%
-            return `hsla(${hue}, ${saturation}%, 65%, 0.6)`;
+            const hue = (i / totalI) * 60 + 0; // Red to orange range (0-60)
+            const saturation = (j / totalJ) * 20 + 80; // 80% to 100%
+            const lightness = (i / totalI) * 30 + 50; // 50% to 80%
+            return `hsla(${hue}, ${saturation}%, ${lightness}%, 0.7)`;
         },
 
-        // Control configuration for interactive UI
         controls: {
-            layout: {
-                panelWidth: 450,
-                paramColumns: "90px 1fr 65px",
-                rangeColumns: "60px 1fr 65px"
-            },
-            mapRange: {
-                x: { min: -6, max: 6, step: 0.1 },
-                y: { min: -6, max: 6, step: 0.1 }
-            },
-            parameters: {
-                a: { min: -2, max: 0, step: 0.01 },
-                b: { min: 1, max: 2.5, step: 0.01 },
-                c: { min: 0.5, max: 1.5, step: 0.01 },
-                d: { min: 0.2, max: 1.2, step: 0.01 }
-            }
+            a: { min: -2.0, max: -0.8, step: 0.01, label: "Parameter A" },
+            b: { min: 1.0, max: 2.2, step: 0.01, label: "Parameter B" },
+            c: { min: 0.4, max: 1.6, step: 0.01, label: "Parameter C" },
+            d: { min: 0.2, max: 1.2, step: 0.01, label: "Parameter D" }
         }
     }
     // You can add more systems here: Ikeda, Lozi, etc.

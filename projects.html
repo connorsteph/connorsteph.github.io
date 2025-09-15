@@ -10,10 +10,23 @@
 <body>
     <div id="nav-placeholder"></div>
 
-    <header class="dynamic-header">
-        <canvas id="tinkerbellCanvas" data-system="tinkerbell" data-controls="true"></canvas>
+    <header class="base-header dynamic-header">
+        <canvas id="tinkerbellCanvas" data-system="tinkerbell"></canvas>
         <div class="header-overlay">
             <h1>Projects and Topics</h1>
+            <div class="header-controls">
+                <button id="toggleControls" class="toggle-controls-button">Show Controls</button>
+                <div id="controlsPanel" class="controls-panel hidden">
+                    <div class="controls-header">
+                        <h4>Dynamics Controls</h4>
+                        <button id="closeControls" class="close-controls">×</button>
+                    </div>
+                    <div id="parameterControls" class="parameter-controls">
+                        <!-- Parameter sliders will be dynamically generated -->
+                    </div>
+                    <button id="resetParams" class="reset-button">Reset Parameters</button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -73,6 +86,7 @@
     </main>
 
     <!-- Component system -->
+    <script src="/js/darkmode.js"></script>
     <script src="/js/nav.js"></script>
     <script src="/js/components.js"></script>
     <script src="/js/systems.js"></script>

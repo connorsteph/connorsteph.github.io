@@ -35,23 +35,11 @@ const frameInterval = 1000 / targetFPS;
 
 let trajectories = [];
 let currentParams = {};
+let manualParams = {}; // User-overridden parameters
 let time = 0;
 let lastFrameTime = 0;
 let animationFrameId;
-
-// --- Interactive Controls State ---
-let mapRange = {
-    xMin: activeSystem.mapRange.xMin,
-    xMax: activeSystem.mapRange.xMax,
-    yMin: activeSystem.mapRange.yMin,
-    yMax: activeSystem.mapRange.yMax
-};
-let paramCenters = {};
-
-// Initialize parameter centers from system defaults
-for (const key in activeSystem.evolution) {
-    paramCenters[key] = activeSystem.evolution[key].center;
-}
+let currentSystemName = systemName;
 
 function initialize() {
     canvas.width = header.clientWidth;
@@ -62,10 +50,11 @@ function initialize() {
     trajectories = [];
     time = 0;
 
+    const currentSystemObj = DYNAMICAL_SYSTEMS[currentSystemName];
     for (let i = 0; i < numPointsX; i++) {
         for (let j = 0; j < numPointsY; j++) {
-            const { x, y } = activeSystem.initialConditions();
-            const color = activeSystem.colorFunction(i, j, numPointsX, numPointsY);
+            const { x, y } = currentSystemObj.initialConditions();
+            const color = currentSystemObj.colorFunction(i, j, numPointsX, numPointsY);
             trajectories.push({ x, y, color });
         }
     }
@@ -83,21 +72,25 @@ function animate(currentTime) {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Evolve parameters for the active system
-    for (const key in activeSystem.evolution) {
-        const p = activeSystem.evolution[key];
-        currentParams[key] = paramCenters[key] + p.func(time * p.speed) * p.range;
+    const currentSystemObj = DYNAMICAL_SYSTEMS[currentSystemName];
+    for (const key in currentSystemObj.evolution) {
+        const p = currentSystemObj.evolution[key];
+        // Use manual parameter if set, otherwise use evolved parameter
+        currentParams[key] = manualParams[key] !== undefined
+            ? manualParams[key]
+            : p.center + p.func(time * p.speed) * p.range;
     }
 
     // Process each trajectory using the system's update function
     for (let i = 0; i < trajectories.length; i++) {
         const p = trajectories[i];
 
-        const { x: x_next, y: y_next } = activeSystem.updateFunction(p, currentParams);
+        const { x: x_next, y: y_next } = currentSystemObj.updateFunction(p, currentParams);
         p.x = x_next;
         p.y = y_next;
 
-        const canvasX = mapRangeUtil(p.x, mapRange.xMin, mapRange.xMax, 0, canvas.width);
-        const canvasY = mapRangeUtil(p.y, mapRange.yMin, mapRange.yMax, 0, canvas.height);
+        const canvasX = mapRange(p.x, currentSystemObj.mapRange.xMin, currentSystemObj.mapRange.xMax, 0, canvas.width);
+        const canvasY = mapRange(p.y, currentSystemObj.mapRange.yMin, currentSystemObj.mapRange.yMax, 0, canvas.height);
 
         // Point Recycling
         const resetThreshold = Math.max(canvas.width, canvas.height);
@@ -105,7 +98,7 @@ function animate(currentTime) {
             canvasX < -resetThreshold || canvasX > canvas.width + resetThreshold ||
             canvasY < -resetThreshold || canvasY > canvas.height + resetThreshold) {
 
-            const { x, y } = activeSystem.initialConditions();
+            const { x, y } = currentSystemObj.initialConditions();
             p.x = x;
             p.y = y;
             continue;
@@ -118,7 +111,7 @@ function animate(currentTime) {
 }
 
 // --- Utility & Event Listeners ---
-function mapRangeUtil(value, inMin, inMax, outMin, outMax) {
+function mapRange(value, inMin, inMax, outMin, outMax) {
     return (value - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
 
@@ -135,181 +128,92 @@ document.addEventListener('visibilitychange', () => {
 });
 
 // --- Interactive Controls ---
-function createControls() {
-    // Only create controls if enabled via data attribute and don't already exist
-    if (!canvas.dataset.controls || document.querySelector(`.${systemName}-controls`)) return;
+function toggleControls() {
+    const controlsPanel = document.getElementById('controlsPanel');
+    const toggleButton = document.getElementById('toggleControls');
 
-    const controlsDiv = document.createElement('div');
-    controlsDiv.className = `${systemName}-controls`;
+    if (!controlsPanel || !toggleButton) return;
 
-    // Apply system-specific layout configuration
-    const layout = activeSystem.controls.layout;
+    const isHidden = controlsPanel.classList.contains('hidden');
 
-    // Generate map range controls
-    const mapRangeControls = `
-        <div class="control-group">
-            <label>X Range:</label>
-            <div class="range-controls">
-                <div class="range-item">
-                    <label>min:</label>
-                    <input type="range" id="xMin" min="${activeSystem.controls.mapRange.x.min}" max="${mapRange.xMax}" step="${activeSystem.controls.mapRange.x.step}" value="${mapRange.xMin}">
-                    <span id="xMinVal">${mapRange.xMin}</span>
-                </div>
-                <div class="range-item">
-                    <label>max:</label>
-                    <input type="range" id="xMax" min="${mapRange.xMin}" max="${activeSystem.controls.mapRange.x.max}" step="${activeSystem.controls.mapRange.x.step}" value="${mapRange.xMax}">
-                    <span id="xMaxVal">${mapRange.xMax}</span>
-                </div>
-            </div>
-        </div>
-        <div class="control-group">
-            <label>Y Range:</label>
-            <div class="range-controls">
-                <div class="range-item">
-                    <label>min:</label>
-                    <input type="range" id="yMin" min="${activeSystem.controls.mapRange.y.min}" max="${mapRange.yMax}" step="${activeSystem.controls.mapRange.y.step}" value="${mapRange.yMin}">
-                    <span id="yMinVal">${mapRange.yMin}</span>
-                </div>
-                <div class="range-item">
-                    <label>max:</label>
-                    <input type="range" id="yMax" min="${mapRange.yMin}" max="${activeSystem.controls.mapRange.y.max}" step="${activeSystem.controls.mapRange.y.step}" value="${mapRange.yMax}">
-                    <span id="yMaxVal">${mapRange.yMax}</span>
-                </div>
-            </div>
-        </div>
-    `;
+    if (isHidden) {
+        controlsPanel.classList.remove('hidden');
+        toggleButton.textContent = 'Hide Controls';
+    } else {
+        controlsPanel.classList.add('hidden');
+        toggleButton.textContent = 'Show Controls';
+    }
+}
 
-    // Generate parameter controls
-    const paramControls = Object.keys(activeSystem.controls.parameters).map(param => {
-        const config = activeSystem.controls.parameters[param];
-        return `
-            <div class="param-item">
-                <label>${param}:</label>
-                <input type="range" id="${param}Center" min="${config.min}" max="${config.max}" step="${config.step}" value="${paramCenters[param]}">
-                <span id="${param}CenterVal">${paramCenters[param]}</span>
-            </div>
-        `;
-    }).join('');
+function updateParameterControls() {
+    const controlsContainer = document.getElementById('parameterControls');
+    if (!controlsContainer) return;
 
-    controlsDiv.innerHTML = `
-        <div class="controls-toggle">⚙️</div>
-        <div class="controls-panel" style="
-            --panel-width: ${layout.panelWidth}px;
-            --param-columns: ${layout.paramColumns};
-            --range-columns: ${layout.rangeColumns};">
-            <div class="controls-header">
-                <h4>${activeSystem.name} Controls</h4>
-                <button class="close-controls">×</button>
-            </div>
-            ${mapRangeControls}
-            <div class="control-group">
-                <label>${activeSystem.name} Parameters:</label>
-                <div class="param-controls">
-                    ${paramControls}
-                </div>
-            </div>
-            <button id="resetView">Reset View</button>
-        </div>
-    `;
+    const system = DYNAMICAL_SYSTEMS[currentSystemName];
+    if (!system.controls) return;
 
-    header.appendChild(controlsDiv);
+    controlsContainer.innerHTML = '';
 
-    // Add event listeners for map range controls
-    const xMinSlider = document.getElementById('xMin');
-    const xMaxSlider = document.getElementById('xMax');
-    const yMinSlider = document.getElementById('yMin');
-    const yMaxSlider = document.getElementById('yMax');
+    Object.entries(system.controls).forEach(([paramName, config]) => {
+        const controlGroup = document.createElement('div');
+        controlGroup.className = 'parameter-control';
 
-    const xMinVal = document.getElementById('xMinVal');
-    const xMaxVal = document.getElementById('xMaxVal');
-    const yMinVal = document.getElementById('yMinVal');
-    const yMaxVal = document.getElementById('yMaxVal');
+        const label = document.createElement('label');
+        label.textContent = `${config.label}:`;
+        label.htmlFor = `param-${paramName}`;
 
-    function updateRanges() {
-        mapRange.xMin = parseFloat(xMinSlider.value);
-        mapRange.xMax = parseFloat(xMaxSlider.value);
-        mapRange.yMin = parseFloat(yMinSlider.value);
-        mapRange.yMax = parseFloat(yMaxSlider.value);
+        const slider = document.createElement('input');
+        slider.type = 'range';
+        slider.id = `param-${paramName}`;
+        slider.min = config.min;
+        slider.max = config.max;
+        slider.step = config.step;
+        slider.value = system.evolution[paramName].center;
 
-        xMinVal.textContent = mapRange.xMin.toFixed(1);
-        xMaxVal.textContent = mapRange.xMax.toFixed(1);
-        yMinVal.textContent = mapRange.yMin.toFixed(activeSystem.controls.mapRange.y.step < 0.1 ? 2 : 1);
-        yMaxVal.textContent = mapRange.yMax.toFixed(activeSystem.controls.mapRange.y.step < 0.1 ? 2 : 1);
+        const valueDisplay = document.createElement('span');
+        valueDisplay.className = 'parameter-value';
+        valueDisplay.textContent = slider.value;
 
-        // Update parameter centers
-        Object.keys(activeSystem.controls.parameters).forEach(param => {
-            const slider = document.getElementById(`${param}Center`);
-            const display = document.getElementById(`${param}CenterVal`);
-            if (slider && display) {
-                paramCenters[param] = parseFloat(slider.value);
-                display.textContent = paramCenters[param].toFixed(2);
-            }
+        slider.addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value);
+            manualParams[paramName] = value;
+            valueDisplay.textContent = value.toFixed(2);
         });
 
-        initialize(); // Reinitialize with new settings
+        controlGroup.appendChild(label);
+        controlGroup.appendChild(slider);
+        controlGroup.appendChild(valueDisplay);
+        controlsContainer.appendChild(controlGroup);
+    });
+}
+
+function resetParameters() {
+    manualParams = {};
+    updateParameterControls();
+}
+
+// Set up event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleButton = document.getElementById('toggleControls');
+    const closeButton = document.getElementById('closeControls');
+    const resetButton = document.getElementById('resetParams');
+
+    if (toggleButton) {
+        toggleButton.addEventListener('click', toggleControls);
     }
 
-    // Add listeners for map range
-    xMinSlider.addEventListener('input', updateRanges);
-    xMaxSlider.addEventListener('input', updateRanges);
-    yMinSlider.addEventListener('input', updateRanges);
-    yMaxSlider.addEventListener('input', updateRanges);
+    if (closeButton) {
+        closeButton.addEventListener('click', toggleControls);
+    }
 
-    // Add listeners for parameters
-    Object.keys(activeSystem.controls.parameters).forEach(param => {
-        const slider = document.getElementById(`${param}Center`);
-        if (slider) {
-            slider.addEventListener('input', updateRanges);
-        }
-    });
+    if (resetButton) {
+        resetButton.addEventListener('click', resetParameters);
+    }
 
-    // Reset button
-    document.getElementById('resetView').addEventListener('click', () => {
-        mapRange.xMin = activeSystem.mapRange.xMin;
-        mapRange.xMax = activeSystem.mapRange.xMax;
-        mapRange.yMin = activeSystem.mapRange.yMin;
-        mapRange.yMax = activeSystem.mapRange.yMax;
-
-        Object.keys(activeSystem.evolution).forEach(param => {
-            paramCenters[param] = activeSystem.evolution[param].center;
-        });
-
-        // Update sliders
-        xMinSlider.value = mapRange.xMin;
-        xMaxSlider.value = mapRange.xMax;
-        yMinSlider.value = mapRange.yMin;
-        yMaxSlider.value = mapRange.yMax;
-
-        Object.keys(activeSystem.controls.parameters).forEach(param => {
-            const slider = document.getElementById(`${param}Center`);
-            if (slider) {
-                slider.value = paramCenters[param];
-            }
-        });
-
-        updateRanges();
-    });
-
-    // Toggle panel visibility
-    const toggle = controlsDiv.querySelector('.controls-toggle');
-    const panel = controlsDiv.querySelector('.controls-panel');
-    const closeBtn = controlsDiv.querySelector('.close-controls');
-
-    toggle.addEventListener('click', () => {
-        panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-    });
-
-    closeBtn.addEventListener('click', () => {
-        panel.style.display = 'none';
-    });
-
-    // Start with panel hidden
-    panel.style.display = 'none';
-}
+    // Initialize parameter controls
+    updateParameterControls();
+});
 
 // --- Kick off ---
-if (activeSystem.controls) {
-    createControls();
-}
 initialize();
 animate(performance.now());

@@ -23,6 +23,9 @@ function createNavigation(isHomePage = false) {
                 <div class="nav-links">
                     ${linksHTML}
                 </div>
+                <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
+                    <span class="dark-mode-icon">🌙</span>
+                </button>
             </div>
         </nav>
     `;
