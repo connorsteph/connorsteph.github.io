@@ -4,7 +4,7 @@ const activeSystem = DYNAMICAL_SYSTEMS.tinkerbell; // Or DYNAMICAL_SYSTEMS.deJon
 
 // --- Element Setup ---
 const header = document.querySelector('.dynamic-header');
-const canvas = document.getElementById('attractorCanvas');
+const canvas = document.getElementById('tinkerbellCanvas');
 const ctx = canvas.getContext('2d');
 const backgroundColor = '#0c0c0c';
 

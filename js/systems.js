@@ -25,13 +25,21 @@ const DYNAMICAL_SYSTEMS = {
             return {
                 x: Math.random() * 0.5 - 0.25,
                 y: Math.random() * 0.5 - 0.25,
-            };
+        };
         },
         
         // How to color the points
         colorFunction: (i, j, totalI, totalJ) => {
             const hue = (i + j) / (totalI + totalJ) * 360;
             return `hsla(${hue}, 90%, 60%, 0.7)`;
+        },
+
+        // Interactive controls configuration
+        controls: {
+            a: { min: 0.5, max: 1.3, step: 0.01, label: "Parameter A" },
+            b: { min: -1.0, max: -0.2, step: 0.01, label: "Parameter B" },
+            c: { min: 1.5, max: 2.5, step: 0.01, label: "Parameter C" },
+            d: { min: 0.2, max: 0.9, step: 0.01, label: "Parameter D" }
         }
     },
 
@@ -64,6 +72,13 @@ const DYNAMICAL_SYSTEMS = {
             const hue = (i / totalI) * 180 + 180; // Hues from cyan to magenta
             const lightness = (j / totalJ) * 40 + 30; // 30% to 70%
             return `hsla(${hue}, 95%, ${lightness}%, 0.7)`;
+        },
+
+        controls: {
+            a: { min: 0.8, max: 2.0, step: 0.01, label: "Parameter A" },
+            b: { min: -3.0, max: -1.5, step: 0.01, label: "Parameter B" },
+            c: { min: 1.8, max: 3.0, step: 0.01, label: "Parameter C" },
+            d: { min: -2.8, max: -1.4, step: 0.01, label: "Parameter D" }
         }
     },
 
@@ -94,7 +109,52 @@ const DYNAMICAL_SYSTEMS = {
             const hue = Math.floor((i / totalI) * 180 + 180); // Hues from 180 to 360
             const lightness = (j / totalJ) * 40 + 30; // 30% to 70%
             return `hsla(${hue}, 80%, ${lightness}%, 0.8)`;
+        },
+
+        controls: {
+            a: { min: 0.8, max: 1.6, step: 0.01, label: "Parameter A" },
+            b: { min: 0.1, max: 0.5, step: 0.01, label: "Parameter B" }
+        }
+    },
+
+    clifford: {
+        name: "Clifford Attractor",
+
+        updateFunction: (p, params) => {
+            const x_next = Math.sin(params.a * p.y) + params.c * Math.cos(params.a * p.x);
+            const y_next = Math.sin(params.b * p.x) + params.d * Math.cos(params.b * p.y);
+            return { x: x_next, y: y_next };
+        },
+
+        evolution: {
+            a: { center: -1.4, range: 0.3, speed: 0.0001, func: Math.sin },
+            b: { center: 1.6, range: 0.2, speed: 0.00012, func: Math.cos },
+            c: { center: 1.0, range: 0.4, speed: 0.00015, func: Math.sin },
+            d: { center: 0.7, range: 0.3, speed: 0.0002, func: Math.cos },
+        },
+
+        mapRange: { xMin: -3, xMax: 3, yMin: -3, yMax: 3 },
+
+        initialConditions: () => {
+            return {
+                x: Math.random() * 2 - 1,
+                y: Math.random() * 2 - 1,
+            };
+        },
+
+        colorFunction: (i, j, totalI, totalJ) => {
+            const hue = (i / totalI) * 60 + 0; // Red to orange range (0-60)
+            const saturation = (j / totalJ) * 20 + 80; // 80% to 100%
+            const lightness = (i / totalI) * 30 + 50; // 50% to 80%
+            return `hsla(${hue}, ${saturation}%, ${lightness}%, 0.7)`;
+        },
+
+        controls: {
+            a: { min: -2.0, max: -0.8, step: 0.01, label: "Parameter A" },
+            b: { min: 1.0, max: 2.2, step: 0.01, label: "Parameter B" },
+            c: { min: 0.4, max: 1.6, step: 0.01, label: "Parameter C" },
+            d: { min: 0.2, max: 1.2, step: 0.01, label: "Parameter D" }
         }
     }
-    // You can add more systems here: Clifford, Ikeda, Lozi, etc.
+    // You can add more systems here: Ikeda, Lozi, etc.
 };

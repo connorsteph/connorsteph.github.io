@@ -12,9 +12,18 @@
     <div id="nav-placeholder"></div>
 
     <header class="dynamic-header">
-        <canvas id="henonCanvas"></canvas>
+        <canvas id="dejongCanvas" data-system="deJong"></canvas>
         <div class="header-overlay">
             <h1>Connor Stephens</h1>
+            <div class="header-controls">
+                <button id="toggleControls" class="toggle-controls-button">Show Controls</button>
+                <div id="controlsPanel" class="controls-panel hidden">
+                    <div id="parameterControls" class="parameter-controls">
+                        <!-- Parameter sliders will be dynamically generated -->
+                    </div>
+                    <button id="resetParams" class="reset-button">Reset Parameters</button>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -75,6 +84,7 @@
     <!-- JavaScript -->
     <script src="/js/nav.js"></script>
     <script src="/js/components.js"></script>
-    <script src="/js/henon.js"></script>
+    <script src="/js/systems.js"></script>
+    <script src="/js/header.js"></script>
 </body>
 </html>
