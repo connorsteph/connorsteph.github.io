@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About This Page - Connor Stephens</title>
+    <meta name="description" content="Learn about the dynamical systems visualization on the landing page">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <main>
+        <section class="hero">
+            <h1>About This Page</h1>
+            <p class="subtitle">The dynamical systems visualization behind the landing page</p>
+        </section>
+
+        <section class="content">
+            <h2>What You're Seeing</h2>
+            <p>The animated background on the landing page displays the trajectories of a <strong>dynamical system</strong>, integrated forwards in time from a collection of random initial conditions. Points that diverge to infinity are resampled to initial conditions. The previous points slowly fade over time, making for a striking visualization as you adjust the parameters that govern the dynamical system.</p>
+
+            <h2>The Systems</h2>
+
+            <h3>De Jong Attractor (Default)</h3>
+            <p>Named after Peter de Jong, this system generates flowing, organic patterns through the iteration of two simple equations. The attractor creates smooth curves that never quite repeat, exploring the same regions of space in endlessly varying ways.</p>
+
+            <h3>Henon Map</h3>
+            <p>A classic example of chaos in discrete dynamical systems. Despite its simple quadratic equations, the Henon map can produce highly complex, fractal-like structures. It's one of the most studied chaotic systems in mathematics.</p>
+
+            <h3>Tinkerbell Map</h3>
+            <p>Creates intricate, fairy-dust-like patterns that seem to sparkle across the canvas. The name comes from the delicate, magical appearance of the resulting visualizations.</p>
+
+            <h3>Clifford Attractor</h3>
+            <p>Produces symmetric, flowing patterns that often resemble abstract art or natural phenomena like smoke or fluid flow. Named after mathematician Clifford Pickover.</p>
+
+            <h3>Lozi Map</h3>
+            <p>A piecewise-linear variant of the Henon map that maintains chaotic behavior while using simpler linear functions. Despite its mathematical simplicity, it produces rich visual complexity.</p>
+
+            <h2>Interactive Controls</h2>
+            <p>Click "Show Controls" to reveal parameter sliders that let you modify the mathematical constants in real-time. Each system has different parameters that control aspects like:</p>
+            <ul>
+                <li><strong>Shape and size</strong> of the attractor</li>
+                <li><strong>Density and distribution</strong> of points</li>
+                <li><strong>Symmetry and orientation</strong> of patterns</li>
+                <li><strong>Chaotic vs. regular</strong> behavior</li>
+            </ul>
+            <p>The "Reset Parameters" button returns each system to its default, visually appealing configuration.</p>
+
+            <h2>The Mathematics</h2>
+            <p>Each system is defined by iterative equations that take a point (x, y) and transform it to a new point (x', y'). When you iterate this process thousands of times and plot the results, these beautiful patterns emerge. The magic lies in how simple mathematical rules can generate such intricate and visually stunning results.</p>
+
+            <h2>Why This Matters</h2>
+            <p>These visualizations represent more than just pretty patterns - they're windows into the mathematical structures that underlie much of the natural world. Similar dynamics appear in weather systems, population models, celestial mechanics, and even in the <a href="/projects/poincare.html">research I've done</a> on analyzing chaotic trajectory data with machine learning.</p>
+
+            <p>The fact that such visual beauty emerges from mathematical precision speaks to the deep connections between mathematics, nature, and art.</p>
+        </section>
+
+        <div class="back-link">
+            <a href="/">← Back to landing page</a>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="/js/darkmode.js"></script>
+    <script src="/js/nav.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+</html>

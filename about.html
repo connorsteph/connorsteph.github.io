@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Connor Stephens</title>
+    <meta name="description" content="Learn more about Connor Stephens, machine learning engineer and researcher.">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <header class="base-header dynamic-header">
+        <canvas id="dejongCanvas" data-system="deJong"></canvas>
+        <div class="header-overlay">
+            <h1>Connor Stephens</h1>
+            <div class="header-controls">
+                <button id="toggleControls" class="toggle-controls-button">Show Controls</button>
+                <div id="controlsPanel" class="controls-panel hidden">
+                    <div class="controls-header">
+                        <h4>Dynamics Controls</h4>
+                        <button id="closeControls" class="close-controls">×</button>
+                    </div>
+                    <div id="parameterControls" class="parameter-controls">
+                        <!-- Parameter sliders will be dynamically generated -->
+                    </div>
+                    <button id="resetParams" class="reset-button">Reset Parameters</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="homepage-layout">
+            <div class="main-content">
+                <section class="content">
+                    <h2>About Me</h2>
+                    <p>I'm a machine learning engineer at <a href="https://www.atomic.ai/">Atomic AI</a>, where I split my time between developing machine learning models, building infrastructure to support the development and deployment of said models, and working with scientists to leverage the tools that we're building to accelerate RNA drug discovery. We recently released the <a href="https://www.biorxiv.org/content/10.1101/2023.12.13.571579v1">ATOM-1</a> whitepaper where we talk about some of the cool stuff that we've been working on.</p>
+
+                    <p>Born, raised and educated in Edmonton, Alberta, I'm currently living in San Francisco, California. I miss outdoor hockey rinks but it turns out that quad roller skating is a pretty good substitute in the Bay Area.</p>
+
+                    <p>In a previous life, I thought that I wanted to be a physicist, but I've since realized that I'm broadly interested in working on cool problems with cool people. Over the years I've performed my best impression of "too interdisciplinary to function". I've been lucky enough to work on a wide variety of problems in a wide variety of fields; I've worked on problems in computational physics, computer vision, robotics, space science and machine learning, both on the theory and applied side.</p>
+
+                    <p>I'm particularly interested in working on problems that are at the intersection of machine learning and the natural sciences, especially in areas where there is an opportunity to make a positive impact on the world, and I'm especially excited about the flurry of activity in structural biology and materials science that we're seeing right now. I'm particularly interested in finding ways to combine the current strengths of machine-learned models with the power of traditional computational methods to achieve breakthroughs in accuracy and efficiency. For example, combining <a href="https://www.science.org/doi/10.1126/science.aaw1147">Boltzmann generators</a> and or <a href="https://www.science.org/doi/10.1126/science.adl2528">all-atom structure prediction models</a> in conjunction with docking and free energy perturbation methods to accelerate drug discovery.</p>
+
+
+                    <h2>Education</h2>
+                    <p>I hold a BSc with Honors in Physics from the University of Alberta, and an MSc in Computing Science with a specialization in Statistical Machine Learning from the University of Alberta. My MSc thesis (with <a href="https://scholar.google.com/citations?user=zvC19mQAAAAJ&hl=en">Czaba Szepesvári</a>) was on the topic of pure exploration problems in multi-armed bandits. I did a research internship with the <a href="https://www.esa.int/gsp/ACT/about/theteam/">Advanced Concepts Team</a> at the European Space Agency, where I used machine learning to analyze chaotic trajectory data and rode my bike on endless Dutch bike paths with childlike glee.</p>
+
+                    <h2>Contact</h2>
+                    <p>If you'd like to get in contact, my personal email is on my <a href="https://github.com/connorsteph">Github profile</a>, along with my LinkedIn.</p>
+                </section>
+            </div>
+
+            <aside class="projects-sidebar">
+                <h3 class="sidebar-projects-title">Selected Projects</h3>
+
+                <div class="sidebar-project-item">
+                    <a href="/projects/atom1.html" class="sidebar-project-link">🧬 ATOM-1</a>
+                    <p class="sidebar-project-description">A sequence-to-sequence foundation model for RNA biophysics, and the core of Atomic AI's 3D structure prediction model.</p>
+                </div>
+
+                <div class="sidebar-project-item">
+                    <a href="/projects/bandits.html" class="sidebar-project-link">🧭 Pure exploration in bandit problems</a>
+                    <p class="sidebar-project-description">How to run an experiment as efficiently as possible when there's no explicit penalty for exploration.</p>
+                </div>
+
+                <div class="sidebar-project-item">
+                    <a href="/projects/poincare.html" class="sidebar-project-link">🛰️ Deep learning for dynamical systems</a>
+                    <p class="sidebar-project-description">A project with the European Space Agency using deep learning to analyze chaotic trajectory data.</p>
+                </div>
+
+                <div class="sidebar-project-item">
+                    <a href="/projects/ataxx.html" class="sidebar-project-link">🧮 Ataxx game search engine</a>
+                    <p class="sidebar-project-description">My C++ Ataxx minimax search engine that won a graduate heuristic search course tournament (by being fast, and spending its time wisely in the tournament).</p>
+                </div>
+
+                <div class="sidebar-project-item">
+                    <a href="/projects.html" class="sidebar-project-link">→ All Projects</a>
+                    <p class="sidebar-project-description">View the complete list of projects and research topics.</p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="/js/darkmode.js"></script>
+    <script src="/js/nav.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/systems.js"></script>
+    <script src="/js/header.js"></script>
+</body>
+</html>

@@ -192,8 +192,95 @@ function resetParameters() {
     updateParameterControls();
 }
 
+// Update equation display
+function updateEquationDisplay() {
+    const equationContent = document.getElementById('equationContent');
+    if (equationContent && DYNAMICAL_SYSTEMS[currentSystemName] && DYNAMICAL_SYSTEMS[currentSystemName].equation) {
+        console.log(`Updating equation display for system: ${currentSystemName}`);
+        equationContent.innerHTML = DYNAMICAL_SYSTEMS[currentSystemName].equation;
+
+        // Re-render MathJax for the updated content with optimized coordination
+        if (window.MathJax && window.MathJax.typesetPromise && mathJaxReady) {
+            // Use requestAnimationFrame to avoid blocking the animation loop
+            requestAnimationFrame(() => {
+                console.log('Rendering MathJax for:', currentSystemName);
+                window.MathJax.typesetPromise([equationContent]).then(() => {
+                    console.log('MathJax rendering complete');
+                }).catch((err) => {
+                    console.warn('MathJax typeset error:', err);
+                });
+            });
+        } else {
+            console.log('MathJax not ready for typesetting yet');
+        }
+    } else {
+        console.warn('Cannot update equation: missing content element or system data');
+    }
+}
+
+// System switching functionality
+function switchSystem(newSystemName) {
+    if (!DYNAMICAL_SYSTEMS[newSystemName]) {
+        console.error(`System "${newSystemName}" not found`);
+        return;
+    }
+
+    console.log(`Switching to system: ${newSystemName}`);
+    currentSystemName = newSystemName;
+
+    // Update canvas data-system attribute
+    canvas.dataset.system = newSystemName;
+
+    // Reset manual parameters
+    manualParams = {};
+
+    // Reinitialize with new system
+    initialize();
+
+    // Update parameter controls for new system
+    updateParameterControls();
+
+    // Update equation display for new system
+    updateEquationDisplay();
+}
+
+// Initialize system picker if it exists
+function initializeSystemPicker() {
+    const systemSelect = document.getElementById('systemSelect');
+    const systemPicker = document.querySelector('.system-picker');
+
+    if (!systemSelect) {
+        console.log('System picker not found - skipping initialization');
+        return;
+    }
+
+    if (!systemPicker) {
+        console.log('System picker container not found');
+        return;
+    }
+
+    console.log('Initializing system picker');
+    console.log('System picker element:', systemPicker);
+    console.log('System select element:', systemSelect);
+
+    // Ensure the system picker is visible
+    systemPicker.style.display = 'flex';
+
+    // Set initial value to match canvas data-system
+    systemSelect.value = canvas.dataset.system || currentSystemName;
+
+    systemSelect.addEventListener('change', (e) => {
+        console.log(`System picker changed to: ${e.target.value}`);
+        switchSystem(e.target.value);
+    });
+
+    console.log('System picker initialized successfully');
+}
+
 // Set up event listeners
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Content Loaded - initializing header');
+
     const toggleButton = document.getElementById('toggleControls');
     const closeButton = document.getElementById('closeControls');
     const resetButton = document.getElementById('resetParams');
@@ -212,8 +299,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize parameter controls
     updateParameterControls();
+
+    // Initialize system picker separately with a small delay to ensure DOM is fully ready
+    setTimeout(initializeSystemPicker, 100);
 });
 
 // --- Kick off ---
 initialize();
+
+// Global flag to track MathJax readiness
+let mathJaxReady = false;
+let mathJaxLoadAttempts = 0;
+const MAX_LOAD_ATTEMPTS = 50; // 5 seconds with 100ms intervals
+
+// Called when MathJax script loads
+window.handleMathJaxLoad = function() {
+    console.log('MathJax script loaded');
+    waitForMathJaxStartup();
+};
+
+// Wait for MathJax startup system to be available
+function waitForMathJaxStartup() {
+    mathJaxLoadAttempts++;
+
+    if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
+        console.log('MathJax startup system ready');
+        // Use MathJax's startup promise for coordination
+        window.MathJax.startup.promise.then(() => {
+            console.log('MathJax fully initialized');
+            mathJaxReady = true;
+            updateEquationDisplay();
+        }).catch((err) => {
+            console.warn('MathJax startup error:', err);
+            // Fallback: try direct update
+            mathJaxReady = true;
+            updateEquationDisplay();
+        });
+    } else if (mathJaxLoadAttempts < MAX_LOAD_ATTEMPTS) {
+        // MathJax startup not ready yet, try again
+        console.log(`Waiting for MathJax startup... attempt ${mathJaxLoadAttempts}`);
+        setTimeout(waitForMathJaxStartup, 100);
+    } else {
+        // Give up waiting and try to render anyway
+        console.warn('MathJax startup timeout, proceeding anyway');
+        mathJaxReady = true;
+        updateEquationDisplay();
+    }
+}
+
+// Initialize when DOM is ready
+function initializeMathJax() {
+    if (mathJaxReady) {
+        updateEquationDisplay();
+    } else if (window.MathJax) {
+        // MathJax object exists, try to use it
+        waitForMathJaxStartup();
+    } else {
+        // MathJax not loaded yet, it will be handled by onload event
+        console.log('Waiting for MathJax script to load...');
+    }
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeMathJax);
+} else {
+    // DOM already loaded
+    initializeMathJax();
+}
+
 animate(performance.now());

@@ -1,17 +1,23 @@
+// Central configuration for all pages
+const PAGES = [
+    { id: 'home', href: '/', text: 'Home', paths: ['/', '/index.html'] },
+    { id: 'about', href: '/about.html', text: 'About', paths: ['/about.html'] },
+    { id: 'projects', href: '/projects.html', text: 'Projects', paths: ['/projects.html'] },
+    { id: 'cv', href: '/cv.html', text: 'CV', paths: ['/cv.html'] }
+];
+
+// External links that are always shown
+const EXTERNAL_LINKS = [
+    { href: 'https://github.com/connorsteph', text: 'GitHub', target: '_blank' }
+];
+
 // Navigation component
-function createNavigation(isHomePage = false) {
-    const navLinks = isHomePage
-        ? [
-            { href: '/projects.html', text: 'Projects' },
-            { href: '/cv.html', text: 'CV' },
-            { href: 'https://github.com/connorsteph', text: 'GitHub', target: '_blank' }
-          ]
-        : [
-            { href: '/', text: 'Home' },
-            { href: '/projects.html', text: 'Projects' },
-            { href: '/cv.html', text: 'CV' },
-            { href: 'https://github.com/connorsteph', text: 'GitHub', target: '_blank' }
-          ];
+function createNavigation(currentPageId = null) {
+    // Get pages excluding the current page
+    const pageLinks = PAGES.filter(page => page.id !== currentPageId);
+
+    // Combine page links with external links
+    const navLinks = [...pageLinks, ...EXTERNAL_LINKS];
 
     const linksHTML = navLinks.map(link =>
         `<a href="${link.href}"${link.target ? ` target="${link.target}"` : ''}>${link.text}</a>`
@@ -32,4 +38,5 @@ function createNavigation(isHomePage = false) {
 }
 
 // Export for use in other scripts
+window.PAGES = PAGES;
 window.createNavigation = createNavigation;
