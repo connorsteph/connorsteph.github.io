@@ -8,9 +8,6 @@
     <link rel="icon" type="image/png" href="/static/favicon.png">
     <link rel="stylesheet" href="style.css">
 
-    <!-- MathJax Performance Optimizations -->
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
-    <link rel="preload" href="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" as="script">
 
     <!-- MathJax Configuration -->
     <script>
@@ -18,28 +15,14 @@
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true,
-                processEnvironments: true
+                processEscapes: true
             },
             options: {
                 skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-            },
-            startup: {
-                ready: () => {
-                    MathJax.startup.defaultReady();
-                    console.log('MathJax is loaded and ready');
-                }
-            },
-            loader: {
-                load: ['[tex]/color']
-            },
-            // Performance optimizations
-            showProcessingMessages: false,
-            showMathMenu: false,
-            messageStyle: 'none'
+            }
         };
     </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" onload="handleMathJaxLoad()"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
 </head>
 <body class="fullscreen-landing">
     <div id="nav-placeholder"></div>

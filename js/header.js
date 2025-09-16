@@ -199,19 +199,11 @@ function updateEquationDisplay() {
         console.log(`Updating equation display for system: ${currentSystemName}`);
         equationContent.innerHTML = DYNAMICAL_SYSTEMS[currentSystemName].equation;
 
-        // Re-render MathJax for the updated content with optimized coordination
-        if (window.MathJax && window.MathJax.typesetPromise && mathJaxReady) {
-            // Use requestAnimationFrame to avoid blocking the animation loop
-            requestAnimationFrame(() => {
-                console.log('Rendering MathJax for:', currentSystemName);
-                window.MathJax.typesetPromise([equationContent]).then(() => {
-                    console.log('MathJax rendering complete');
-                }).catch((err) => {
-                    console.warn('MathJax typeset error:', err);
-                });
+        // Re-render MathJax for the updated content
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise([equationContent]).catch((err) => {
+                console.warn('MathJax typeset error:', err);
             });
-        } else {
-            console.log('MathJax not ready for typesetting yet');
         }
     } else {
         console.warn('Cannot update equation: missing content element or system data');
@@ -302,70 +294,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize system picker separately with a small delay to ensure DOM is fully ready
     setTimeout(initializeSystemPicker, 100);
+
+    // Initialize equation display when MathJax is ready
+    initializeEquationDisplay();
 });
+
+// Initialize equation display when MathJax is ready
+function initializeEquationDisplay() {
+    function checkMathJax() {
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            updateEquationDisplay();
+        } else {
+            // MathJax not ready yet, check again in 100ms
+            setTimeout(checkMathJax, 100);
+        }
+    }
+    checkMathJax();
+}
 
 // --- Kick off ---
 initialize();
 
-// Global flag to track MathJax readiness
-let mathJaxReady = false;
-let mathJaxLoadAttempts = 0;
-const MAX_LOAD_ATTEMPTS = 50; // 5 seconds with 100ms intervals
-
-// Called when MathJax script loads
-window.handleMathJaxLoad = function() {
-    console.log('MathJax script loaded');
-    waitForMathJaxStartup();
-};
-
-// Wait for MathJax startup system to be available
-function waitForMathJaxStartup() {
-    mathJaxLoadAttempts++;
-
-    if (window.MathJax && window.MathJax.startup && window.MathJax.startup.promise) {
-        console.log('MathJax startup system ready');
-        // Use MathJax's startup promise for coordination
-        window.MathJax.startup.promise.then(() => {
-            console.log('MathJax fully initialized');
-            mathJaxReady = true;
-            updateEquationDisplay();
-        }).catch((err) => {
-            console.warn('MathJax startup error:', err);
-            // Fallback: try direct update
-            mathJaxReady = true;
-            updateEquationDisplay();
-        });
-    } else if (mathJaxLoadAttempts < MAX_LOAD_ATTEMPTS) {
-        // MathJax startup not ready yet, try again
-        console.log(`Waiting for MathJax startup... attempt ${mathJaxLoadAttempts}`);
-        setTimeout(waitForMathJaxStartup, 100);
-    } else {
-        // Give up waiting and try to render anyway
-        console.warn('MathJax startup timeout, proceeding anyway');
-        mathJaxReady = true;
-        updateEquationDisplay();
-    }
-}
-
-// Initialize when DOM is ready
-function initializeMathJax() {
-    if (mathJaxReady) {
-        updateEquationDisplay();
-    } else if (window.MathJax) {
-        // MathJax object exists, try to use it
-        waitForMathJaxStartup();
-    } else {
-        // MathJax not loaded yet, it will be handled by onload event
-        console.log('Waiting for MathJax script to load...');
-    }
-}
-
-// Initialize when DOM is ready
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeMathJax);
-} else {
-    // DOM already loaded
-    initializeMathJax();
-}
 
 animate(performance.now());
