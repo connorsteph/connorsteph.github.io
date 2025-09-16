@@ -872,8 +872,9 @@ a:hover {
 
 /* Back link */
 .back-link {
-    margin-top: 3rem;
+    margin-top: 2rem;
     padding-top: 2rem;
+    margin-bottom: 1rem;
     border-top: 1px solid var(--border-color);
     text-align: center;
     transition: border-color 0.3s ease;
