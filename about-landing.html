@@ -27,10 +27,10 @@
             <div class="math-container">
                 $$\begin{align}
                 x_{n+1} &= 1 - ax_n^2 + y_n \\
-                y_{n+1} &= bx_n
+                y_{n+1} &= bx_n,
                 \end{align}$$
             </div>
-            <p>Where $a$ and $b$ are parameters (typically $a = 1.4$ and $b = 0.3$). This system displays a mix of regular and chaotic trajectories depending on the initial conditions $(x_0, y_0)$. Regular trajectories trace out one-dimensional curves (bright lines) on the two-dimensional plane, whereas chaotic trajectories create space-filling curves (broad, fuzzy areas).</p>
+            <p>where $a$ and $b$ are system parameters (typically $a = 1.4$ and $b = 0.3$). This system displays a mix of regular and chaotic trajectories depending on the initial conditions $(x_0, y_0)$. Regular trajectories trace out one-dimensional curves (bright lines) on the two-dimensional plane, whereas chaotic trajectories create space-filling curves (broad, fuzzy areas). Playing around with $a$ and $b$, you'll likely build some intuition for how these parameters change the shape of where trajectories collect -- maybe you could even start to guess the values of $a$ and $b$ just by looking at the size and shapes of the trajectories that the system traces out. This might give you the idea that a computer-vision model could be trained to do something like this (and you would be <a href="/projects/poincare.html">correct</a>).</p>
 
             For a little pizazz I also make $a$ and $b$ dynamic:
             <div class="math-container">
@@ -54,7 +54,7 @@
             <p>The "Reset Parameters" button returns each system to its defaults, selected to represent a visually interesting starting point.</p>
 
         </section>
-        
+
         <div class="back-link">
             <a href="/">← Back to landing page</a>
         </div>

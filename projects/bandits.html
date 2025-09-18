@@ -16,13 +16,14 @@
         </section>
 
         <section class="content">
-            <h2>Pure Exploration Problems in Multi-Armed Bandits</h2>
-
+            <p><strong>Related work:</strong></p>
             <ul>
                 <li>My MSc <a href="https://ualberta.scholaris.ca/items/218785d5-9457-4e13-9c20-1dbfe9c7f0b3">thesis</a></li>
                 <li>My thesis presentation <a href="https://docs.google.com/presentation/d/1oH7xgx8LvFTtbOWEDjjZt4ycRAobA9ztOEjYfNreTqk/edit?usp=sharing">slides</a> -- contains transitions, be sure to view in presentation mode</li>
                 <li>ICML 2023 <a href="https://proceedings.mlr.press/v202/zhao23g">paper</a> (second author)</li>
             </ul>
+
+            <h2>Problem Overview</h2>
 
             <h3>Motivation</h3>
 
@@ -32,7 +33,8 @@
 
             <p>If your friend was in charge of the way that users are assigned the sweater that they'll see on their questionnaire they may choose a traditional A/B/n testing approach which would be to show each user a sweater selected uniformly at random. A disadvantage of this approach is that if some of the sweaters designs are truly far more popular than others then this may be the most efficient use of their sampling budget; a more powerful approach would be for them to take a sequential decision making approach to collecting information, for instance ruling out designs that users have already indicated are clearly unpopular and in doing so reserving more samples to rank the popularities of the remaining designs.</p>
 
-            <p>This example has several characteristics which are archetypical of pure exploration problems in multi-armed:</p>
+            <h3>Problem Characteristics</h3>
+            <p>This example has several characteristics which are archetypical of pure exploration problems in multi-armed bandits:</p>
 
             <ul>
                 <li>A selection among a finite collection of options has to be made based on stochastic feedback about the quality of each individual option.</li>
@@ -42,9 +44,10 @@
                 <li>Apart from sampling budget constraints and considerations of sample efficiency there is no 'cost' for taking a sample.</li>
             </ul>
 
-            <hr>
+            <h3 style="margin-top: 2rem;">Research Overview</h3>
+            <p>Pure exploration research is focused on developing and analysing algorithms which select which data to collect along with which option to recommend in order to return the best selection possible. There are many problem settings within this field (such as minimizing the samples required for a learner to be able guarantee a decision of a prescribed quality, or optimizing the quality of a decision given a fixed budget) as well as many measures of the quality of the selection returned.</p>
 
-            <p>Pure exploration research is focused on developing and analysing algorithms which select which data to collect along with which option to recommend in order to return the best selection possible. There are many problem settings within this field (such as minimizing the samples required for a learner to be able guarantee a decision of a prescribed quality, or optimizing the quality of a decision given a fixed budget) as well as many measures of the quality of the selection returned. Alas all problem settings and objectives are not made equal in the eyes of a statistician running an experiment in a given real world situation. My <a href="https://era.library.ualberta.ca/items/e4d666bc-5825-401d-8cdd-e7dcae90f1fd">thesis</a> collates state of the art results in many of the pure exploration settings, discussing their strengths and limitations and also provides some new characterizations of the hardness of several pure exploration problems.</p>
+            <p>Alas all problem settings and objectives are not made equal in the eyes of a statistician running an experiment in a given real world situation. My <a href="https://era.library.ualberta.ca/items/e4d666bc-5825-401d-8cdd-e7dcae90f1fd">thesis</a> collates state of the art results in many of the pure exploration settings, discussing their strengths and limitations and also provides some new characterizations of the hardness of several pure exploration problems.</p>
         </section>
 
         <div class="back-link">

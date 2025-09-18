@@ -60,6 +60,18 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Global list styling - slightly indented like CV section */
+ul, ol {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+li {
+    margin-bottom: 0.25rem;
+    line-height: 1.5;
+}
+
 /* Navigation */
 nav {
     display: flex;
