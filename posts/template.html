@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POST_TITLE - Connor Stephens</title>
+    <meta name="description" content="POST_DESCRIPTION">
+    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <header class="base-header dynamic-header">
+        <canvas id="dejongCanvas" data-system="henon"></canvas>
+        <div class="header-overlay">
+            <h1>POST_TITLE</h1>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="post-meta">
+                <div class="post-date">POST_DATE</div>
+                <div class="post-category">POST_CATEGORY</div>
+                <div class="post-tags">
+                    POST_TAGS
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+                <!-- Post content goes here -->
+                <p>Replace this content with your post. You can use:</p>
+                <ul>
+                    <li>Regular HTML elements</li>
+                    <li>Mathematical expressions using MathJax: $E = mc^2$</li>
+                    <li>Display equations: $$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$</li>
+                    <li>Code blocks with syntax highlighting</li>
+                </ul>
+
+                <h2>Section Headings</h2>
+                <p>Your post content here...</p>
+
+                <h3>Subsections</h3>
+                <p>More content...</p>
+
+                <pre><code class="language-python">
+# Code examples
+import numpy as np
+import matplotlib.pyplot as plt
+
+def example_function():
+    return "Hello, World!"
+                </code></pre>
+        </section>
+
+        <div class="back-link">
+            <a href="/posts.html">← Back to Posts</a>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="/js/darkmode.js"></script>
+    <script src="/js/nav.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/systems.js"></script>
+    <script src="/js/header.js"></script>
+</body>
+</html>

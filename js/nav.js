@@ -2,7 +2,8 @@
 const PAGES = [
     { id: 'home', href: '/', text: 'Home', paths: ['/', '/index.html'] },
     { id: 'about', href: '/about.html', text: 'About', paths: ['/about.html'] },
-    { id: 'projects', href: '/projects.html', text: 'Projects', paths: ['/projects.html'] }
+    { id: 'projects', href: '/projects.html', text: 'Projects', paths: ['/projects.html'] },
+    { id: 'posts', href: '/posts.html', text: 'Posts', paths: ['/posts.html'] }
 ];
 
 // External links that are always shown

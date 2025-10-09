@@ -1,0 +1,21 @@
+{
+  "posts": [
+    {
+      "title": "Sample Post: Mathematical Foundations",
+      "url": "/posts/sample-post.html",
+      "date": "January 15, 2024",
+      "category": "Mathematics",
+      "excerpt": "This is a sample blog post demonstrating the post template with MathJax support. It includes mathematical expressions and demonstrates the styling capabilities.",
+      "tags": ["math", "sample", "template"]
+    },
+    {
+      "title": "Practical Linear Algebra for Machine Learning",
+      "url": "/posts/practical-ml-linalg.html",
+      "date": "October 8, 2025",
+      "category": "Machine Learning",
+      "excerpt": "A practical guide to linear algebra for machine learning.",
+      "tags": ["machine learning", "linear algebra", "practical"]
+    }
+  ]
+}
+
