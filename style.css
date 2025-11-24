@@ -21,10 +21,16 @@
     --sidebar-bg: #f8f9fa;
     --sidebar-border: #e9ecef;
     --link-color: #0066cc;
-    --link-hover: #0066cc;
+    --link-hover: #004499;
     --section-title: #111;
     --content-bg: #fff;
     --special-bg: #f1f3f4;
+    /* Grain-inspired accent colors from dynamical systems */
+    --accent-cyan: #00d4ff;
+    --accent-magenta: #ff00d4;
+    --accent-warm: #ff6b35;
+    --header-gradient-start: #0c0c0c;
+    --header-gradient-end: #1a1a1a;
 }
 
 /* Dark mode variables */
@@ -43,10 +49,14 @@
     --sidebar-bg: #2a2a2a;
     --sidebar-border: #404040;
     --link-color: #66b3ff;
-    --link-hover: #4da6ff;
+    --link-hover: #99ccff;
     --section-title: #f0f0f0;
     --content-bg: #1a1a1a;
     --special-bg: #333;
+    /* Dark mode accent colors - softer versions */
+    --accent-cyan: #4dd4ff;
+    --accent-magenta: #ff4dd4;
+    --accent-warm: #ff8c5a;
 }
 
 /* Typography */
@@ -193,7 +203,7 @@ main {
     position: relative;
     margin-bottom: 2rem;
     overflow: visible;
-    background-color: var(--header-bg-color, #0c0c0c);
+    background: linear-gradient(135deg, var(--header-gradient-start), var(--header-gradient-end));
     border-bottom: var(--header-border, none);
 }
 
@@ -807,8 +817,134 @@ body.fullscreen-landing {
 
 .subtitle {
     font-size: 1.1rem;
-    color: #666;
+    color: var(--text-light);
     font-style: italic;
+}
+
+/* Hero section for landing pages */
+.hero {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: var(--special-bg);
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    color: var(--section-title);
+    transition: color 0.3s ease;
+}
+
+.hero .subtitle {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: 0;
+}
+
+/* Math container for displayed equations */
+.math-container {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--special-bg);
+    border-radius: 6px;
+    overflow-x: auto;
+    transition: background-color 0.3s ease;
+}
+
+.math-container .MathJax {
+    font-size: 1.1em !important;
+}
+
+/* Explanation sections (henon-explanation, etc.) */
+.henon-explanation {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--sidebar-bg);
+    border-left: 3px solid var(--link-color);
+    border-radius: 0 8px 8px 0;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.henon-explanation h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--section-title);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+/* Mugshot/profile image styling */
+.mugshot {
+    border-radius: 8px;
+    max-width: 250px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mugshot:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .mugshot:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Figure and figcaption styling */
+figure {
+    margin: 0;
+    padding: 0;
+}
+
+figcaption {
+    font-size: 0.9em;
+    color: var(--text-light);
+    text-align: left;
+    margin-top: 8px;
+    font-style: italic;
+    transition: color 0.3s ease;
+}
+
+/* Content image layout - replaces float with modern flex */
+.content-image-right {
+    float: right;
+    margin: 0 0 1.5rem 1.5rem;
+    max-width: 250px;
+}
+
+.content-image-left {
+    float: left;
+    margin: 1.5rem 1.5rem 1.5rem 0;
+    max-width: 250px;
+}
+
+/* Ensure images inside content-image containers fill properly */
+.content-image-left img,
+.content-image-right img {
+    max-width: 100%;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .content-image-right,
+    .content-image-left {
+        float: none;
+        display: block;
+        margin: 1.5rem auto;
+        max-width: 100%;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .henon-explanation {
+        padding: 1rem;
+    }
 }
 
 /* Content sections */
@@ -1788,4 +1924,295 @@ pre code {
         font-size: 14px;
         padding: 6px 10px;
     }
+}
+
+/* ========================================
+   Grain-inspired styling for visual coherence
+   Connects page elements to dynamical systems visuals
+   ======================================== */
+
+/* Subtle gradient accents inspired by attractor color schemes */
+.content h2::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1em;
+    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+    margin-right: 0.75rem;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+.project-category h2::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1em;
+    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+    margin-right: 0.75rem;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+.cv-section-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1em;
+    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+    margin-right: 0.75rem;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+/* Sidebar title gradient accent */
+.sidebar-projects-title::before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 1em;
+    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+    margin-right: 0.75rem;
+    border-radius: 2px;
+    vertical-align: middle;
+}
+
+/* Post preview hover effect with subtle glow */
+.post-preview {
+    position: relative;
+}
+
+.post-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 8px;
+    background: linear-gradient(135deg,
+        rgba(0, 212, 255, 0.03),
+        rgba(255, 0, 212, 0.03));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.post-preview:hover::before {
+    opacity: 1;
+}
+
+[data-theme="dark"] .post-preview::before {
+    background: linear-gradient(135deg,
+        rgba(77, 212, 255, 0.05),
+        rgba(255, 77, 212, 0.05));
+}
+
+/* Project item subtle hover accent */
+.project-item {
+    position: relative;
+    padding-left: 0;
+    transition: padding-left 0.2s ease;
+}
+
+.project-item::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+    border-radius: 2px;
+    transition: height 0.2s ease;
+}
+
+.project-item:hover::before {
+    height: 70%;
+}
+
+/* Sidebar project items accent */
+.sidebar-project-item {
+    position: relative;
+}
+
+.sidebar-project-item::before {
+    content: '';
+    position: absolute;
+    left: -1rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: transparent;
+    transition: background 0.2s ease;
+    border-radius: 1px;
+}
+
+.sidebar-project-item:hover::before {
+    background: linear-gradient(180deg, var(--accent-cyan), transparent);
+}
+
+/* Hero section enhanced styling */
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(0, 212, 255, 0.02) 0%,
+        transparent 50%,
+        rgba(255, 0, 212, 0.02) 100%);
+    pointer-events: none;
+}
+
+[data-theme="dark"] .hero::before {
+    background: linear-gradient(135deg,
+        rgba(77, 212, 255, 0.04) 0%,
+        transparent 50%,
+        rgba(255, 77, 212, 0.04) 100%);
+}
+
+/* Navigation link subtle underline animation */
+.nav-links a {
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+    transition: width 0.2s ease, left 0.2s ease;
+    border-radius: 1px;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Back link with gradient hover */
+.back-link a {
+    position: relative;
+}
+
+.back-link a::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+    transition: width 0.3s ease;
+}
+
+.back-link a:hover::before {
+    width: 100%;
+}
+
+.back-link a:hover {
+    text-decoration: none;
+}
+
+/* Tag styling with gradient hover */
+.tag {
+    position: relative;
+    overflow: hidden;
+}
+
+.tag::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.4s ease;
+}
+
+.tag:hover::before {
+    left: 100%;
+}
+
+/* Math container styling coherent with dynamical theme */
+.math-container {
+    position: relative;
+    border-left: 3px solid transparent;
+    border-image: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta)) 1;
+}
+
+/* Posts intro section styling */
+.posts-intro {
+    position: relative;
+    overflow: hidden;
+}
+
+.posts-intro::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg,
+        rgba(0, 212, 255, 0.03) 0%,
+        transparent 50%,
+        rgba(255, 0, 212, 0.03) 100%);
+    pointer-events: none;
+}
+
+[data-theme="dark"] .posts-intro::before {
+    background: linear-gradient(135deg,
+        rgba(77, 212, 255, 0.05) 0%,
+        transparent 50%,
+        rgba(255, 77, 212, 0.05) 100%);
+}
+
+/* Smooth header-to-content transition */
+.base-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom,
+        transparent 0%,
+        var(--bg-color) 100%);
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0.7;
+}
+
+.fullscreen-header::after {
+    display: none;
+}
+
+/* Subtle transition effects for interactive elements */
+.project-link,
+.sidebar-project-link {
+    background: linear-gradient(90deg, var(--link-color), var(--link-color));
+    background-size: 0% 2px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease, color 0.3s ease;
+}
+
+.project-link:hover,
+.sidebar-project-link:hover {
+    background-size: 100% 2px;
+    text-decoration: none;
 }
