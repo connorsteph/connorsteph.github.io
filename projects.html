@@ -3,93 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects and Topics - Connor Stephens</title>
-    <meta name="description" content="Things that I've worked on">
-    <link rel="stylesheet" href="style.css">
+    <title>Work — Connor Stephens</title>
+    <meta name="description" content="Projects and research topics: RNA foundation models, bandits, dynamical systems, quantum chemistry, robotics, and a game engine.">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/static/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <div id="nav-placeholder"></div>
 
-    <header class="base-header dynamic-header">
-        <canvas id="tinkerbellCanvas" data-system="tinkerbell"></canvas>
-        <div class="header-overlay">
-            <h1>Projects and Topics</h1>
-            <div class="header-controls">
-                <button id="toggleControls" class="toggle-controls-button">Show Controls</button>
-                <div id="controlsPanel" class="controls-panel hidden">
-                    <div class="controls-header">
-                        <h4>Dynamics Controls</h4>
-                        <button id="closeControls" class="close-controls">×</button>
-                    </div>
-                    <div id="parameterControls" class="parameter-controls">
-                        <!-- Parameter sliders will be dynamically generated -->
-                    </div>
-                    <button id="resetParams" class="reset-button">Reset Parameters</button>
-                </div>
+    <main class="page" style="max-width: 1240px;">
+        <div class="running"><span>Work</span><span></span></div>
+
+        <div class="page-head" style="gap: 12px;">
+            <div style="display: flex; align-items: baseline; gap: 18px;">
+                <div class="folio ink" style="font-size: 72px;">03</div>
+                <h1 class="title ink" style="font-size: 48px;">Work</h1>
             </div>
         </div>
-    </header>
 
-    <main>
-
-        <section class="content">
-            <div class="project-category">
-                <h2>Machine Learning</h2>
-                
-                <div class="project-item">
-                    <a href="/projects/atom1.html" class="project-link">🧬 ATOM-1</a>
-                    <p class="project-description">A sequence-to-sequence foundation model for RNA biophysics, and the core of Atomic AI's 3D structure prediction model.</p>
+        <div class="broadsheet">
+            <!-- row 1: lead + two side stories -->
+            <article class="story lead first span-7" id="s3">
+                <div class="kicker">2023</div>
+                <h2 class="ink">Deep learning for dynamical systems analysis</h2>
+                                <div class="figure">
+                    <a href="/projects/poincare.html"><img src="/static/projects/poincare/sam-anim-poster.png" alt="The swinging Atwood's machine beside its Poincaré map, five orbits in five colours"></a>
+                    <div class="caption">The swinging Atwood's machine and its Poincaré map: four regular orbits trace rings, one chaotic orbit (green) fills the sea between them.</div>
                 </div>
-
-                <div class="project-item">
-                    <a href="/projects/bandits.html" class="project-link">🧭 Pure exploration in bandit problems</a>
-                    <p class="project-description">How to run an experiment as efficiently as possible when there's no explicit penalty for exploration (or: the problem setting that gave the world <a href="https://arxiv.org/abs/1603.06560">Hyperband</a>).</p>
+                <div class="body">
+                    <p>Poincaré maps can be used to analyze dynamical systems. They have an interesting property in that different system parameters (say, the mass of a pendulum) result in human-perceptible, surprisingly smoothly changing characteristics in the map, even if the underlying trajectories integrated to obtain it are highly chaotic.</p>
+                    <p>This is notable since estimating the parameters of a dynamical system from trajectory data has proven challenging for chaotic systems. We show that a ResNet can exploit those smoothly changing visual characteristics to regress a system's parameters, given a training set of maps for the same system at various parameter values, and that basic data augmentation handles the practical problems: predictions on trajectories integrated for different lengths of time, or from fewer initial conditions.</p>
                 </div>
+                <a class="cont" href="/projects/poincare.html">Read more →</a>
+            </article>
 
-                <div class="project-item">
-                    <a href="/projects/poincare.html" class="project-link">🛰️ Deep learning for dynamical systems analysis</a>
-                    <p class="project-description">A project with the European Space Agency using deep learning to analyze data from (potentially chaotic) dynamical systems.</p>
-                </div>
+            <div class="span-5" style="display: flex; flex-direction: column;">
+                <article class="story last" id="s1" style="flex-grow: 1;">
+                    <div class="kicker">2023</div>
+                    <h2 class="ink">ATOM-1</h2>
+                    <div class="figure folds">
+                        <a href="/projects/atom1.html"><img src="/static/rnasep/folds.png" alt="Twelve RNA structures drawn as stippled ribbons: tRNA, ribozymes, riboswitches and viral elements, each labelled with its PDB code" width="1600" height="1685"></a>
+                        <div class="caption">Twelve RNA folds, from tRNA to the hammerhead ribozyme and the TPP riboswitch, each with its PDB code.</div>
+                    </div>
+                    <div class="body">
+                        <p>Protein language models and MSAs give AlphaFold and ESM crucial hints about inter-residue interactions. For mammalian mRNA, RNA MSAs are a poor substitute: they're shallow with only four bases, tangled by intron and exon structure, and confounded by codon-level signal.</p>
+                        <p>Chemical probing data is different. It reports, nucleotide by nucleotide, whether a base was accessible in solution, it can be collected across millions of sequences, and a model trained to predict it from sequence learns embeddings that simple probes turn into strong performance on downstream structure tasks.</p>
+                    </div>
+                    <a class="cont" href="/projects/atom1.html">Read more →</a>
+                </article>
+                <article class="story last" id="s2" style="border-top: 1px solid var(--rule-strong); flex-grow: 1;">
+                    <div class="kicker">2022</div>
+                    <h2 class="ink">Pure exploration in bandit problems</h2>
+                    <div class="body">
+                        <p>Imagine that your friend has just started a small online store selling elaborately embroidered sweaters. Setting up production for a new design is slow and expensive, so they'll make a large batch of one design at a time, and they'd like to find the most popular one by showing candidate designs to visitors and asking them to rate their interest. Show each design uniformly at random and you waste views on obvious losers. The setting where you only pay for the final choice, not for exploring, is the one that gave the world Hyperband.</p>
+                    </div>
+                    <a class="cont" href="/projects/bandits.html">Read more →</a>
+                </article>
             </div>
 
-            <div class="project-category">
-                <h2>Computational Physics & Chemistry</h2>
-                
-                <div class="project-item">
-                    <a href="/projects/q_chem.html" class="project-link">⚛️ Ab initio quantum chemistry</a>
-                    <p class="project-description">Applying the <a href="https://en.wikipedia.org/wiki/Variational_method_(quantum_mechanics)#:~:text=In%20quantum%20mechanics%2C%20the%20variational,method%20is%20the%20variational%20principle.">variational method</a> to estimate ground state properties of exotic molecules (or: why I learned Fortran77 in 2016).</p>
-                </div>
-            </div>
+            <div class="rule"></div>
 
-            <div class="project-category">
-                <h2>Computer Vision & Robotics</h2>
-                
-                <div class="project-item">
-                    <a href="/projects/visual_servoing.html" class="project-link">🦾 Visual servoing with humans in the loop</a>
-                    <p class="project-description">A novel control scheme for simplifying the operation of a high degree of freedom robot arm that uses computer vision to define an intuitive, task-specific control manifold.</p>
+            <!-- row 2: three shorts -->
+            <article class="story first span-4" id="s4">
+                <div class="kicker">2016</div>
+                <h2 class="ink">Ab initio quantum chemistry</h2>
+                <div class="body">
+                    <p>PsH is an exotic molecule: a proton and a positron bound together with two electrons, believed to have been observed in the 1990s. Its binding energy is tiny, which makes it a hard test for the variational method, and the properties of interest, like its decay into a proton, an electron and one or zero photons, need integrals that only a very old, very fast language will do.</p>
                 </div>
-            </div>
+                <a class="cont" href="/projects/q_chem.html">Read more →</a>
+            </article>
 
-            <div class="project-category">
-                <h2>Algorithms & Games</h2>
-                
-                <div class="project-item">
-                    <a href="/projects/ataxx.html" class="project-link">🧮 Ataxx game search engine</a>
-                    <p class="project-description">My C++ Ataxx minimax search engine that won a graduate heuristic search course tournament (by being fast, and spending its time wisely in the tournament).</p>
+            <article class="story span-4" id="s5">
+                <div class="kicker">2018</div>
+                <h2 class="ink">Visual servoing with humans in the loop</h2>
+                <div class="figure">
+                    <a href="/projects/visual_servoing.html"><img src="/static/projects/visual_servoing/trajectory_examples.png" alt="Reaching trajectories toward a target, with and without user perturbation"></a>
+                    <div class="caption">A direct reaching trajectory (left) and one with user perturbations (right).</div>
                 </div>
-            </div>
-        </section>
+                <div class="body">
+                    <p>A general-purpose arm has about seven degrees of freedom; a joystick has two. Mark the object you want on a screen and the control scheme can be defined with respect to that goal, splitting reaching and grasping into two intuitive, low-dimensional tasks.</p>
+                </div>
+                <a class="cont" href="/projects/visual_servoing.html">Read more →</a>
+            </article>
 
-        <div class="back-link">
-            <a href="/">← Back to home</a>
+            <article class="story last span-4" id="s6">
+                <div class="kicker">2019</div>
+                <h2 class="ink">Ataxx game search engine</h2>
+                <div class="figure">
+                    <a href="/projects/ataxx.html"><img src="/static/projects/ataxx/ataxx.png" alt="The Ataxx web interface"></a>
+                    <div class="caption">The engine's web front end, playable against humans or itself.</div>
+                </div>
+                <div class="body">
+                    <p>Alpha-beta minimax in C++ for a graduate heuristic-search course, later extended with a web server and point-and-click play. It took the course tournament by being fast and by budgeting its search time across the match. Clone, <code>./build.sh &amp;&amp; ./run_server.sh</code>.</p>
+                </div>
+                <a class="cont" href="/projects/ataxx.html">Read more →</a>
+            </article>
         </div>
     </main>
 
-    <!-- Component system -->
-    <script src="/js/darkmode.js"></script>
     <script src="/js/nav.js"></script>
     <script src="/js/components.js"></script>
-    <script src="/js/systems.js"></script>
-    <script src="/js/header.js"></script>
 </body>
 </html>

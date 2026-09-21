@@ -23,12 +23,18 @@ if (!activeSystem) {
     throw new Error(`Unknown system: ${systemName}`);
 }
 
+// Ink mode: transparent 2D canvas, points in one ink colour, trails fade by eroding alpha.
+// The plate is then blended onto the page by CSS (mix-blend-mode: multiply) instead of sitting on black.
+const inkMode = canvas.dataset.mode === 'ink';
+const inkColor = canvas.dataset.ink || '#241d1a';
+const inkAlpha = parseFloat(canvas.dataset.inkAlpha || '0.6');
+
 // Try WebGL first, fallback to 2D canvas
 let gl, ctx;
 let useWebGL = false;
 
 try {
-    gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    gl = inkMode ? null : (canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
     if (gl) {
         useWebGL = true;
         console.log('Using WebGL for enhanced trajectory rendering');
@@ -228,12 +234,15 @@ function initializeWebGL() {
 }
 
 function initialize() {
-    canvas.width = header.clientWidth;
-    canvas.height = header.clientHeight;
+    const dpr = inkMode ? Math.min(window.devicePixelRatio || 1, 2) : 1;
+    canvas.width = Math.round(header.clientWidth * dpr);
+    canvas.height = Math.round(header.clientHeight * dpr);
 
     if (useWebGL) {
         gl.viewport(0, 0, canvas.width, canvas.height);
         initializeWebGL();
+    } else if (inkMode) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     } else {
         ctx.fillStyle = backgroundColor;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -243,6 +252,7 @@ function initialize() {
     time = 0;
 
     const currentSystemObj = DYNAMICAL_SYSTEMS[currentSystemName];
+    if (currentSystemObj.prepare) currentSystemObj.prepare();
     for (let i = 0; i < numPointsX; i++) {
         for (let j = 0; j < numPointsY; j++) {
             const { x, y } = currentSystemObj.initialConditions();
@@ -396,7 +406,36 @@ function renderWebGL() {
     state.currentTexture = 1 - state.currentTexture;
 }
 
+function renderInk() {
+    // Fade the trail by taking alpha away, then stamp this frame's points in ink.
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = `rgba(0,0,0,${DYNAMICAL_SYSTEMS[currentSystemName].fadeRate ?? fadeRate})`;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = inkColor;
+    ctx.globalAlpha = inkAlpha;
+
+    const currentSystemObj = DYNAMICAL_SYSTEMS[currentSystemName];
+    for (let i = 0; i < trajectories.length; i++) {
+        const p = trajectories[i];
+        const canvasX = mapRange(p.x, currentSystemObj.mapRange.xMin, currentSystemObj.mapRange.xMax, 0, canvas.width);
+        const canvasY = mapRange(p.y, currentSystemObj.mapRange.yMin, currentSystemObj.mapRange.yMax, 0, canvas.height);
+        const resetThreshold = Math.max(canvas.width, canvas.height);
+        if (!isFinite(p.x) || !isFinite(p.y) ||
+            canvasX < -resetThreshold || canvasX > canvas.width + resetThreshold ||
+            canvasY < -resetThreshold || canvasY > canvas.height + resetThreshold) {
+            const { x, y } = currentSystemObj.initialConditions();
+            p.x = x;
+            p.y = y;
+            continue;
+        }
+        ctx.fillRect(canvasX, canvasY, 1.2, 1.2);
+    }
+    ctx.globalAlpha = 1;
+}
+
 function renderCanvas() {
+    if (inkMode) { renderInk(); return; }
     // Exponential fade overlay
     ctx.fillStyle = `rgba(12, 12, 12, ${fadeRate})`;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -476,6 +515,59 @@ function animate(currentTime) {
     }
 
     time++;
+    maybeCycleSystem(currentTime);
+}
+
+// --- Automatic cycling ---
+// Every CYCLE_MS the plate moves on to the next system, until the visitor touches
+// the system menu or the parameter panel. It only starts again on the next visit.
+const CYCLE_MS = 15000;
+let cycling = canvas.dataset.cycle !== 'off';
+let lastSwitchTime = null;
+let cycleQueue = [];
+
+// A fresh random order each visit; every system is shown once before any repeats
+function refillCycleQueue() {
+    const select = document.getElementById('systemSelect');
+    const names = select
+        ? Array.from(select.options).map(o => o.value)
+        : Object.keys(DYNAMICAL_SYSTEMS);
+    for (let i = names.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [names[i], names[j]] = [names[j], names[i]];
+    }
+    // the system already on the plate goes last, so each lap shows every other one first
+    const i = names.indexOf(currentSystemName);
+    if (i >= 0) names.push(names.splice(i, 1)[0]);
+    cycleQueue = names;
+}
+
+function maybeCycleSystem(now) {
+    if (!cycling) return;
+    if (lastSwitchTime === null) { lastSwitchTime = now; return; }
+    if (now - lastSwitchTime < CYCLE_MS) return;
+    lastSwitchTime = now;
+    if (cycleQueue.length === 0) refillCycleQueue();
+    const next = cycleQueue.shift();
+    if (!next || next === currentSystemName) return;
+    switchSystem(next);
+    syncSystemPicker(next);
+}
+
+function stopCycling() { cycling = false; }
+
+// Keep the hidden select and the styled menu in step with a programmatic switch
+function syncSystemPicker(name) {
+    const select = document.getElementById('systemSelect');
+    if (select) select.value = name;
+    const list = document.getElementById('systemMenuList');
+    const btn = document.getElementById('systemMenuButton');
+    if (!list || !btn) return;
+    list.querySelectorAll('li').forEach(li => {
+        const on = li.dataset.value === name;
+        if (on) { li.setAttribute('aria-selected', 'true'); btn.textContent = li.textContent; }
+        else li.removeAttribute('aria-selected');
+    });
 }
 
 // --- Utility & Event Listeners ---
@@ -485,12 +577,15 @@ function mapRange(value, inMin, inMax, outMin, outMax) {
 
 window.addEventListener('resize', () => { if (animationFrameId) initialize(); });
 
+let runningBeforeHide = false;
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
+        runningBeforeHide = !!animationFrameId;
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
-    } else if (!animationFrameId) {
+    } else if (!animationFrameId && runningBeforeHide) {
         lastFrameTime = performance.now();
+        lastSwitchTime = lastFrameTime; // don't switch the instant the tab comes back
         animate(lastFrameTime);
     }
 });
@@ -506,10 +601,10 @@ function toggleControls() {
 
     if (isHidden) {
         controlsPanel.classList.remove('hidden');
-        toggleButton.textContent = 'Hide Controls';
+        toggleButton.textContent = 'Hide parameters';
     } else {
         controlsPanel.classList.add('hidden');
-        toggleButton.textContent = 'Show Controls';
+        toggleButton.textContent = 'Parameters';
     }
 }
 
@@ -657,6 +752,13 @@ document.addEventListener('DOMContentLoaded', () => {
         resetButton.addEventListener('click', resetParameters);
     }
 
+    // Any interaction with the plate's tools ends the automatic cycling for this visit
+    const tools = document.querySelector('.plate-tools');
+    if (tools) {
+        ['pointerdown', 'keydown', 'input', 'change'].forEach(evt =>
+            tools.addEventListener(evt, stopCycling, { capture: true }));
+    }
+
     // Initialize parameter controls
     updateParameterControls();
 
@@ -681,7 +783,15 @@ function initializeEquationDisplay() {
 }
 
 // --- Kick off ---
+// A page can hold the plate back (data-autostart="off") and open it later through window.headerPlate.
 initialize();
+if (canvas.dataset.autostart !== 'off') animate(performance.now());
 
-
-animate(performance.now());
+window.headerPlate = {
+    show(name) {
+        if (name && name !== currentSystemName) { switchSystem(name); syncSystemPicker(name); }
+        else initialize();
+        if (!animationFrameId) { lastFrameTime = performance.now(); lastSwitchTime = lastFrameTime; animate(lastFrameTime); }
+    },
+    stop() { cancelAnimationFrame(animationFrameId); animationFrameId = null; }
+};

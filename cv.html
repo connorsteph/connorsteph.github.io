@@ -5,33 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connor Stephens - Resume</title>
     <meta name="description" content="Resume and professional experience">
-    <link rel="icon" type="image/png" href="/static/favicon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/static/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
     <div id="nav-placeholder"></div>
 
-    <header class="base-header cv-header">
-        <canvas id="cliffordCanvas" data-system="clifford"></canvas>
-        <div class="header-overlay">
-            <h1 class="cv-name">Connor Stephens</h1>
-            <div class="header-controls">
-                <button id="toggleControls" class="toggle-controls-button">Show Controls</button>
-                <div id="controlsPanel" class="controls-panel hidden">
-                    <div class="controls-header">
-                        <h4>Dynamics Controls</h4>
-                        <button id="closeControls" class="close-controls">×</button>
-                    </div>
-                    <div id="parameterControls" class="parameter-controls">
-                        <!-- Parameter sliders will be dynamically generated -->
-                    </div>
-                    <button id="resetParams" class="reset-button">Reset Parameters</button>
-                </div>
-            </div>
-        </div>
-    </header>
+    <main class="page">
+        <div class="running"><span>CV</span><span></span></div>
 
-    <main>
+        <div class="page-head"><h1 class="title ink">Connor Stephens</h1></div>
 
         <div class="cv-summary">
             Machine Learning Scientist with 2+ years applying ML to drug discovery at Atomic AI. Expertise in 3D structure prediction (geometric deep learning + diffusion / flow-matching) and foundation models for biology with experience building models and workflows for virtual screening, QSAR modeling, and molecular dynamics.
@@ -123,15 +112,12 @@
         </section>
 
         <div class="back-link">
-            <a href="/">← Back to home</a>
+            <a href="/">← Back to Contents</a>
         </div>
     </main>
 
     <!-- Component system -->
-    <script src="/js/darkmode.js"></script>
     <script src="/js/nav.js"></script>
     <script src="/js/components.js"></script>
-    <script src="/js/systems.js"></script>
-    <script src="/js/header.js"></script>
 </body>
 </html>

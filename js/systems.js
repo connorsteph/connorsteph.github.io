@@ -95,11 +95,11 @@ const DYNAMICAL_SYSTEMS = {
         },
 
         evolution: {
-            a: { center: 1.3, range: 0.1, speed: 0.01, func: Math.sin },
-            b: { center: 0.6, range: 0.05, speed: 0.01, func: Math.cos },
+            a: { center: 1.32, range: 0.1, speed: 0.01, func: Math.sin },
+            b: { center: 0.89, range: 0.05, speed: 0.01, func: Math.cos },
         },
 
-        mapRange: { xMin: -5.0, xMax: 3.0, yMin: -1.0, yMax: 1.0 },
+        mapRange: { xMin: -5.6, xMax: 2.6, yMin: -2.4, yMax: 2.4 },
 
         initialConditions: () => {
             return {
@@ -163,158 +163,149 @@ const DYNAMICAL_SYSTEMS = {
 
     ikeda: {
         name: "Ikeda Map",
-        equation: "$$\\begin{align} t &= c - \\frac{d}{1 + x^2 + y^2} \\\\ x' &= 1 + a(x\\cos(t) - y\\sin(t)) \\\\ y' &= b(x\\sin(t) + y\\cos(t)) \\end{align}$$",
+        equation: "$$\\begin{align} t &= 0.4 - \\frac{6}{1 + x^2 + y^2} \\\\ x' &= 1 + u(x\\cos t - y\\sin t) \\\\ y' &= u(x\\sin t + y\\cos t) \\end{align}$$",
 
         updateFunction: (p, params) => {
-            const t = params.c - params.d / (1 + p.x * p.x + p.y * p.y);
-            const x_next = 1 + params.a * (p.x * Math.cos(t) - p.y * Math.sin(t));
-            const y_next = params.b * (p.x * Math.sin(t) + p.y * Math.cos(t));
-            return { x: x_next, y: y_next };
+            const t = 0.4 - 6 / (1 + p.x * p.x + p.y * p.y);
+            const c = Math.cos(t), s = Math.sin(t);
+            return { x: 1 + params.u * (p.x * c - p.y * s), y: params.u * (p.x * s + p.y * c) };
         },
 
         evolution: {
-            a: { center: 0.9, range: 0.1, speed: 0.0001, func: Math.sin },
-            b: { center: 0.4, range: 0.05, speed: 0.00012, func: Math.cos },
-            c: { center: 0.4, range: 0.2, speed: 0.00008, func: Math.sin },
-            d: { center: 6.0, range: 1.0, speed: 0.0002, func: Math.cos },
+            u: { center: 0.9, range: 0.03, speed: 0.004, func: Math.sin },
         },
 
-        mapRange: { xMin: -10, xMax: 10, yMin: -10, yMax: 10 },
+        mapRange: { xMin: -0.7, xMax: 2.5, yMin: -2.6, yMax: 1.6 },
 
-        initialConditions: () => {
-            return {
-                x: Math.random() * 2 - 1,
-                y: Math.random() * 2 - 1,
-            };
-        },
+        initialConditions: () => ({ x: Math.random() * 3 - 1, y: Math.random() * 4 - 2.5 }),
 
-        colorFunction: (i, j, totalI, totalJ) => {
-            const hue = (i / totalI) * 120 + 200; // Blue to cyan range (200-320)
-            const saturation = (j / totalJ) * 30 + 70; // 70% to 100%
-            const lightness = (i / totalI) * 25 + 45; // 45% to 70%
-            return `hsla(${hue}, ${saturation}%, ${lightness}%, 0.8)`;
-        },
+        colorFunction: (i, j, totalI, totalJ) => `hsla(${(i / totalI) * 60 + 180}, 90%, 60%, 0.7)`,
 
         controls: {
-            a: { min: 0.7, max: 1.1, step: 0.01, label: "a" },
-            b: { min: 0.2, max: 0.6, step: 0.01, label: "b" },
-            c: { min: 0.1, max: 0.8, step: 0.01, label: "c" },
-            d: { min: 4.0, max: 8.0, step: 0.1, label: "d" }
+            u: { min: 0.7, max: 0.98, step: 0.005, label: "u" }
         }
     },
 
-    lozi: {
-        name: "Lozi Map",
-        equation: "$$\\begin{align} x' &= 1 - a|x| + y \\\\ y' &= bx \\end{align}$$",
+    standard: {
+        name: "Standard Map",
+        equation: "$$\\begin{align} p' &= p + K\\sin\\theta \\\\ \\theta' &= \\theta + p' \\end{align}$$",
 
         updateFunction: (p, params) => {
-            const x_next = 1 - params.a * Math.abs(p.x) + p.y;
-            const y_next = params.b * p.x;
-            return { x: x_next, y: y_next };
+            const TAU = 2 * Math.PI, wrap = v => ((v % TAU) + TAU) % TAU;
+            const py = wrap(p.y + params.K * Math.sin(p.x));
+            return { x: wrap(p.x + py), y: py };
         },
 
         evolution: {
-            a: { center: 1.7, range: 0.2, speed: 0.0001, func: Math.sin },
-            b: { center: 0.5, range: 0.05, speed: 0.00015, func: Math.cos },
+            K: { center: 0.7, range: 0.2, speed: 0.002, func: Math.sin },
         },
 
-        mapRange: { xMin: -2.5, xMax: 2.5, yMin: -1.5, yMax: 1.5 },
+        mapRange: { xMin: 0, xMax: 2 * Math.PI, yMin: 0, yMax: 2 * Math.PI },
 
-        initialConditions: () => {
-            return {
-                x: Math.random() * 2 - 1,
-                y: Math.random() * 0.5 - 0.25,
-            };
+        // Area-preserving, so a uniform cloud stays uniform. Start the trajectories in a few
+        // dozen tight bunches instead: each bunch traces out its own orbit, islands and all.
+        fadeRate: 0.006,
+        seeds: [],
+        prepare() {
+            this.seeds = Array.from({ length: 48 }, () => ({ x: Math.random() * 2 * Math.PI, y: Math.random() * 2 * Math.PI }));
+        },
+        initialConditions() {
+            if (!this.seeds.length) this.prepare();
+            const s = this.seeds[Math.floor(Math.random() * this.seeds.length)];
+            return { x: s.x + (Math.random() - 0.5) * 1e-3, y: s.y + (Math.random() - 0.5) * 1e-3 };
         },
 
-        colorFunction: (i, j, totalI, totalJ) => {
-            const hue = (j / totalJ) * 60 + 60; // Yellow to green range (60-120)
-            const saturation = (i / totalI) * 20 + 80; // 80% to 100%
-            const lightness = (j / totalJ) * 35 + 40; // 40% to 75%
-            return `hsla(${hue}, ${saturation}%, ${lightness}%, 0.75)`;
-        },
+        colorFunction: (i, j, totalI, totalJ) => `hsla(${(j / totalJ) * 120 + 200}, 80%, 60%, 0.7)`,
 
         controls: {
-            a: { min: 1.4, max: 2.0, step: 0.01, label: "a" },
-            b: { min: 0.3, max: 0.7, step: 0.01, label: "b" }
+            K: { min: 0.2, max: 1.6, step: 0.01, label: "K" }
         }
     },
 
-    duffing: {
-        name: "Duffing Map",
-        equation: "$$\\begin{align} x' &= y \\\\ y' &= -bx + ay - y^3 + c\\cos(dx) \\end{align}$$",
+    gumowskiMira: {
+        name: "Gumowski–Mira Map",
+        equation: "$$\\begin{align} g(x) &= \\mu x + \\frac{2(1-\\mu)x^2}{1 + x^2} \\\\ x' &= y + a(1 - by^2)y + g(x) \\\\ y' &= -x + g(x') \\end{align}$$",
 
         updateFunction: (p, params) => {
-            const x_next = p.y;
-            const y_next = -params.b * p.x + params.a * p.y - p.y * p.y * p.y + params.c * Math.cos(params.d * p.x);
-            return { x: x_next, y: y_next };
+            const g = x => params.mu * x + 2 * (1 - params.mu) * x * x / (1 + x * x);
+            const xn = p.y + params.a * (1 - params.b * p.y * p.y) * p.y + g(p.x);
+            return { x: xn, y: -p.x + g(xn) };
         },
 
         evolution: {
-            a: { center: 3.05, range: 0.05, speed: 0.0001, func: Math.sin },
-            b: { center: 0.24, range: 0.05, speed: 0.00012, func: Math.cos },
-            c: { center: 0.28, range: 0.1, speed: 0.00008, func: Math.sin },
-            d: { center: 1.04, range: 0.2, speed: 0.0002, func: Math.cos },
+            mu: { center: -0.7, range: 0.1, speed: 0.003, func: Math.sin },
+            a: { center: 0.008, range: 0, speed: 0, func: Math.sin },
+            b: { center: 0.05, range: 0, speed: 0, func: Math.sin },
         },
 
-        mapRange: { xMin: -3, xMax: 3, yMin: -3, yMax: 3 },
+        mapRange: { xMin: -19, xMax: 19, yMin: -12.5, yMax: 12.5 },
+        fadeRate: 0.035,
 
-        initialConditions: () => {
-            return {
-                x: Math.random() * 2 - 1,
-                y: Math.random() * 2 - 1,
-            };
-        },
+        initialConditions: () => ({ x: Math.random() * 20 - 10, y: Math.random() * 20 - 10 }),
 
-        colorFunction: (i, j, totalI, totalJ) => {
-            const hue = (i / totalI) * 90 + 270; // Purple to magenta range (270-360)
-            const saturation = (j / totalJ) * 25 + 75; // 75% to 100%
-            const lightness = (i / totalI) * 30 + 45; // 45% to 75%
-            return `hsla(${hue}, ${saturation}%, ${lightness}%, 0.8)`;
-        },
+        colorFunction: (i, j, totalI, totalJ) => `hsla(${(i / totalI) * 60 + 280}, 80%, 60%, 0.7)`,
 
         controls: {
-            a: { min: 2.0, max: 4.0, step: 0.01, label: "a" },
-            b: { min: 0.05, max: 0.5, step: 0.01, label: "b" },
-            c: { min: 0.05, max: 0.6, step: 0.01, label: "c" },
-            d: { min: 0.2, max: 2.0, step: 0.01, label: "d" }
+            mu: { min: -1.0, max: 0.4, step: 0.01, label: "μ" },
+            a: { min: 0, max: 0.05, step: 0.001, label: "a" },
+            b: { min: 0, max: 0.2, step: 0.005, label: "b" }
         }
     },
 
-    gingerbreadman: {
-        name: "Gingerbreadman Map",
-        equation: "$$\\begin{align} x' &= 1 - y + |x| \\\\ y' &= x \\end{align}$$",
+    bedhead: {
+        name: "Bedhead Attractor",
+        equation: "$$\\begin{align} x' &= y\\sin\\!\\left(\\tfrac{xy}{b}\\right) + \\cos(ax - y) \\\\ y' &= x + \\frac{\\sin y}{b} \\end{align}$$",
 
-        updateFunction: (p, params) => {
-            const x_next = 1 - p.y + Math.abs(p.x);
-            const y_next = p.x;
-            return { x: x_next, y: y_next };
-        },
+        updateFunction: (p, params) => ({
+            x: Math.sin(p.x * p.y / params.b) * p.y + Math.cos(params.a * p.x - p.y),
+            y: p.x + Math.sin(p.y) / params.b,
+        }),
 
         evolution: {
-            // This system is less parameterdependent, so we'll use subtle variations
-            offset: { center: 0, range: 0.1, speed: 0.00005, func: Math.sin },
+            a: { center: -0.81, range: 0.02, speed: 0.004, func: Math.sin },
+            b: { center: -0.92, range: 0.02, speed: 0.003, func: Math.cos },
         },
 
-        mapRange: { xMin: -10, xMax: 10, yMin: -10, yMax: 10 },
+        mapRange: { xMin: -2.3, xMax: 1.5, yMin: -1.8, yMax: 2.1 },
 
-        initialConditions: () => {
-            return {
-                x: Math.random() * 6 - 3,
-                y: Math.random() * 6 - 3,
-            };
-        },
+        initialConditions: () => ({ x: Math.random() * 2 - 1, y: Math.random() * 2 - 1 }),
 
-        colorFunction: (i, j, totalI, totalJ) => {
-            const hue = (i / totalI) * 40 + 20; // Orange to yellow range (20-60)
-            const saturation = (j / totalJ) * 20 + 85; // 85% to 100%
-            const lightness = (i / totalI) * 25 + 50; // 50% to 75%
-            return `hsla(${hue}, ${saturation}%, ${lightness}%, 0.9)`;
-        },
+        colorFunction: (i, j, totalI, totalJ) => `hsla(${(i / totalI) * 40 + 20}, 85%, 60%, 0.7)`,
 
         controls: {
-            offset: { min: -1.0, max: 1.0, step: 0.01, label: "Offset" }
+            a: { min: -1.0, max: -0.6, step: 0.005, label: "a" },
+            b: { min: -1.1, max: -0.7, step: 0.005, label: "b" }
         }
-    }
+    },
+
+    svensson: {
+        name: "Svensson Attractor",
+        equation: "$$\\begin{align} x' &= d\\sin(ax) - \\sin(by) \\\\ y' &= c\\cos(ax) + \\cos(by) \\end{align}$$",
+
+        updateFunction: (p, params) => ({
+            x: params.d * Math.sin(params.a * p.x) - Math.sin(params.b * p.y),
+            y: params.c * Math.cos(params.a * p.x) + Math.cos(params.b * p.y),
+        }),
+
+        evolution: {
+            a: { center: 1.40, range: 0.1, speed: 0.002, func: Math.sin },
+            b: { center: 1.56, range: 0.1, speed: 0.003, func: Math.cos },
+            c: { center: 1.40, range: 0.1, speed: 0.004, func: Math.sin },
+            d: { center: -6.56, range: 0.3, speed: 0.0025, func: Math.cos },
+        },
+
+        mapRange: { xMin: -8, xMax: 8, yMin: -2.8, yMax: 2.8 },
+
+        initialConditions: () => ({ x: Math.random() * 2 - 1, y: Math.random() * 2 - 1 }),
+
+        colorFunction: (i, j, totalI, totalJ) => `hsla(${(j / totalJ) * 60 + 300}, 85%, 60%, 0.7)`,
+
+        controls: {
+            a: { min: 1.0, max: 2.0, step: 0.01, label: "a" },
+            b: { min: 1.0, max: 2.0, step: 0.01, label: "b" },
+            c: { min: 0.8, max: 2.0, step: 0.01, label: "c" },
+            d: { min: -8.0, max: -4.0, step: 0.05, label: "d" }
+        }
+    },
     // You can add more systems here: Lorenz, Rossler, etc.
 };

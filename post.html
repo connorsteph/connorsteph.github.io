@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>POST_TITLE - Connor Stephens</title>
-    <meta name="description" content="POST_DESCRIPTION">
+    <title>Post</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16.png">
     <link rel="icon" type="image/png" sizes="512x512" href="/static/favicon.png">
@@ -20,14 +19,18 @@
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true
+                processEscapes: true,
+                tags: 'ams'  // Enable automatic equation numbering (AMS style)
             },
             options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
             }
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
+
+    <!-- Marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div id="nav-placeholder"></div>
@@ -36,40 +39,16 @@
         <div class="running"><span>Notes</span><span></span></div>
 
         <section class="hero">
-            <div class="header-overlay"><h1>POST_TITLE</h1></div>
+            <div class="header-overlay"><h1>Loading...</h1></div>
             <div class="post-meta">
-                <div class="post-date">POST_DATE</div>
-                <div class="post-category">POST_CATEGORY</div>
-                <div class="post-tags">
-                    POST_TAGS
-                </div>
+                <div class="post-date"></div>
+                <div class="post-category"></div>
+                <div class="post-tags"></div>
             </div>
         </section>
 
-        <section class="content">
-                <!-- Post content goes here -->
-                <p>Replace this content with your post. You can use:</p>
-                <ul>
-                    <li>Regular HTML elements</li>
-                    <li>Mathematical expressions using MathJax: $E = mc^2$</li>
-                    <li>Display equations: $$\int_{-\infty}^{\infty} e^{-x^2} dx = \sqrt{\pi}$$</li>
-                    <li>Code blocks with syntax highlighting</li>
-                </ul>
-
-                <h2>Section Headings</h2>
-                <p>Your post content here...</p>
-
-                <h3>Subsections</h3>
-                <p>More content...</p>
-
-                <pre><code class="language-python">
-# Code examples
-import numpy as np
-import matplotlib.pyplot as plt
-
-def example_function():
-    return "Hello, World!"
-                </code></pre>
+        <section class="content" id="post-content">
+            <p>Loading post...</p>
         </section>
 
         <div class="back-link">
@@ -80,5 +59,6 @@ def example_function():
     <!-- JavaScript -->
     <script src="/js/nav.js"></script>
     <script src="/js/components.js"></script>
+    <script src="/js/post-renderer.js"></script>
 </body>
 </html>

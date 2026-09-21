@@ -1,52 +1,33 @@
-// Component loader system
+// Injects the shared navigation into #nav-placeholder and marks the current section.
 class ComponentLoader {
     constructor() {
         this.currentPage = this.detectCurrentPage();
     }
 
-    // Detect which page we're currently on using the PAGES configuration
     detectCurrentPage() {
+        if (typeof window.PAGES === 'undefined') return null;
         const path = window.location.pathname;
-
-        // Wait for PAGES to be available from nav.js
-        if (typeof window.PAGES === 'undefined') {
-            return null;
-        }
-
-        // Find the page that matches the current path
-        const currentPage = window.PAGES.find(page =>
-            page.paths.some(pagePath =>
-                path === pagePath || path.endsWith(pagePath)
-            )
+        const page = window.PAGES.find(p =>
+            p.paths.some(pp => path === pp || (pp !== '/' && path.endsWith(pp))) ||
+            (p.prefixes || []).some(pre => path.startsWith(pre))
         );
-
-        return currentPage ? currentPage.id : null;
+        return page ? page.id : null;
     }
 
-    // Load and inject navigation component
     loadNavigation() {
-        const navPlaceholder = document.getElementById('nav-placeholder');
-        if (navPlaceholder && window.createNavigation) {
-            navPlaceholder.outerHTML = window.createNavigation(this.currentPage);
+        const placeholder = document.getElementById('nav-placeholder');
+        if (placeholder && window.createNavigation) {
+            placeholder.outerHTML = window.createNavigation(this.currentPage);
         }
     }
 
-    // Initialize all components
     init() {
-        // Wait for DOM to be ready
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.loadComponents());
+            document.addEventListener('DOMContentLoaded', () => this.loadNavigation());
         } else {
-            this.loadComponents();
+            this.loadNavigation();
         }
-    }
-
-    // Load all components
-    loadComponents() {
-        this.loadNavigation();
     }
 }
 
-// Initialize component loader
-const componentLoader = new ComponentLoader();
-componentLoader.init();
+new ComponentLoader().init();

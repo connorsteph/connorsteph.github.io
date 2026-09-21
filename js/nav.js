@@ -1,42 +1,57 @@
-// Central configuration for all pages
+// Site navigation: a fixed left column (top bar on phones).
+// Every page includes <div id="nav-placeholder"></div> as the first child of <body>;
+// components.js replaces it with the markup built here.
+
 const PAGES = [
-    { id: 'home', href: '/', text: 'Home', paths: ['/', '/index.html'] },
-    { id: 'about', href: '/about.html', text: 'About', paths: ['/about.html'] },
-    { id: 'projects', href: '/projects.html', text: 'Projects', paths: ['/projects.html'] },
-    { id: 'posts', href: '/posts.html', text: 'Posts', paths: ['/posts.html'] }
+    { id: 'home',    n: '01', text: 'Contents', href: '/',              paths: ['/', '/index.html'] },
+    { id: 'about',   n: '02', text: 'About',    href: '/about.html',    paths: ['/about.html'] },
+    { id: 'work',    n: '03', text: 'Work',     href: '/projects.html', paths: ['/projects.html', '/projects-front.html'], prefixes: ['/projects/'],
+      // Shown under Work while you are anywhere in the section: a direct way into each story.
+      sub: [
+        { text: 'ATOM-1',            href: '/projects/atom1.html' },
+        { text: 'Bandits',           href: '/projects/bandits.html' },
+        { text: 'Poincaré maps',     href: '/projects/poincare.html' },
+        { text: 'Positronium hydride', href: '/projects/q_chem.html' },
+        { text: 'Visual servoing',   href: '/projects/visual_servoing.html' },
+        { text: 'Ataxx',             href: '/projects/ataxx.html' },
+      ] },
+    { id: 'notes',   n: '04', text: 'Notes',    href: '/posts.html',    paths: ['/posts.html', '/post.html'], prefixes: ['/posts/'] },
+    { id: 'contact', n: '05', text: 'Contact',  href: '/contact.html',  paths: ['/contact.html'] },
 ];
 
-// External links that are always shown
 const EXTERNAL_LINKS = [
-    { href: 'https://github.com/connorsteph', text: 'GitHub', target: '_blank' }
+    { href: 'https://github.com/connorsteph', text: 'GitHub ↗', target: '_blank', rel: 'noopener' },
+    { href: 'https://www.linkedin.com/', text: 'LinkedIn ↗', target: '_blank', rel: 'noopener' }, // TODO: your LinkedIn URL
+    { href: '/cv.html', text: 'CV ↗' },
 ];
 
-// Navigation component
 function createNavigation(currentPageId = null) {
-    // Get pages excluding the current page
-    const pageLinks = PAGES.filter(page => page.id !== currentPageId);
+    const path = window.location.pathname;
+    const toc = PAGES.map(p => {
+        const cur = p.id === currentPageId ? ' aria-current="page"' : '';
+        let html = `<a href="${p.href}"${cur}><span class="n">${p.n}</span><span class="t">${p.text}</span></a>`;
+        if (p.sub && p.id === currentPageId) {
+            html += '<div class="sub">' + p.sub.map(s => {
+                const here = path === s.href || path.endsWith(s.href) ? ' aria-current="page"' : '';
+                return `<a href="${s.href}"${here}>${s.text}</a>`;
+            }).join('') + '</div>';
+        }
+        return html;
+    }).join('');
 
-    // Combine page links with external links
-    const navLinks = [...pageLinks, ...EXTERNAL_LINKS];
-
-    const linksHTML = navLinks.map(link =>
-        `<a href="${link.href}"${link.target ? ` target="${link.target}"` : ''}>${link.text}</a>`
+    const ext = EXTERNAL_LINKS.map(l =>
+        `<a href="${l.href}"${l.target ? ` target="${l.target}"` : ''}${l.rel ? ` rel="${l.rel}"` : ''}>${l.text}</a>`
     ).join('');
 
     return `
-        <nav>
-            <div class="nav-container">
-                <div class="nav-links">
-                    ${linksHTML}
-                </div>
-                <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
-                    <span class="dark-mode-icon">🌙</span>
-                </button>
-            </div>
+        <nav class="sidebar" aria-label="Sections">
+            <a class="masthead ink" href="/">Connor<br>Stephens</a>
+            <div class="toc">${toc}</div>
+            <div class="spacer"></div>
+            <div class="ext">${ext}</div>
         </nav>
     `;
 }
 
-// Export for use in other scripts
 window.PAGES = PAGES;
 window.createNavigation = createNavigation;

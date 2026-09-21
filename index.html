@@ -4,77 +4,177 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connor Stephens</title>
-    <meta name="description" content="You could be watching TV right now.">
-    <link rel="icon" type="image/png" href="/static/favicon.png">
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Connor Stephens — ML scientist working on models that design and optimize RNA.">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/static/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
 
-
-    <!-- MathJax Configuration -->
     <script>
         window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true
-            },
-            options: {
-                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
-            }
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
+
 </head>
-<body class="fullscreen-landing">
+<body>
     <div id="nav-placeholder"></div>
 
-    <div class="system-picker">
-        <label for="systemSelect">System:</label>
-        <select id="systemSelect">
-            <option value="deJong">De Jong Attractor</option>
-            <option value="henon">Henon Map</option>
-            <option value="tinkerbell">Tinkerbell Map</option>
-            <option value="clifford">Clifford Attractor</option>
-            <!-- <option value="ikeda">Ikeda Map</option> -->
-            <!-- <option value="lozi">Lozi Map</option> -->
-            <!-- <option value="duffing">Duffing Map</option> -->
-            <!-- <option value="gingerbreadman">Gingerbreadman Map</option> -->
-        </select>
-    </div>
+    <main class="page">
+        <div class="running"><span>Contents</span><span></span></div>
 
-    <header class="base-header dynamic-header fullscreen-header">
-        <canvas id="dejongCanvas" data-system="henon"></canvas>
-        <a href="/about-landing.html" class="about-landing-link">About This Page</a>
-        <div class="equation-box" id="equationBox">
-            <!-- <div class="equation-title">Update Equations</div> -->
-            <div class="equation-content" id="equationContent">
-                <!-- Equation will be loaded from systems.js -->
-            </div>
-        </div>
-        <div class="header-overlay">
-            <h1>Connor Stephens</h1>
-            <div class="header-controls">
-                <button id="toggleControls" class="toggle-controls-button">Show Controls</button>
-                <div id="controlsPanel" class="controls-panel hidden">
-                    <div class="controls-header">
-                        <h4>Dynamics Controls</h4>
-                        <button id="closeControls" class="close-controls">×</button>
-                    </div>
-                    <div id="parameterControls" class="parameter-controls">
-                        <!-- Parameter sliders will be dynamically generated -->
-                    </div>
-                    <button id="resetParams" class="reset-button">Reset Parameters</button>
+        <div class="cols cols-5-7">
+            <div class="stack">
+                <h1 class="title ink">ML scientist at Lila Sciences, building models that design and optimize RNA.</h1>
+                <p class="deck">Previously RNA 3D structure at Atomic AI. Statistical machine learning at the University of Alberta, physics before that. Edmonton, then San Francisco.</p>
+
+                <div class="index toc-list">
+                    <a class="row" href="/about.html">
+                        <span class="big ink">02</span>
+                        <span><span class="t">About</span><br><span class="d">Who I am and how I got here.</span></span>
+                    </a>
+                    <a class="row" href="/projects.html">
+                        <span class="big ink">03</span>
+                        <span><span class="t">Work</span><br><span class="d">Projects and research topics, from RNA models to a game engine.</span></span>
+                    </a>
+                    <a class="row" href="/posts.html">
+                        <span class="big ink">04</span>
+                        <span><span class="t">Notes</span><br><span class="d">Technical posts and working notes, newest first.</span></span>
+                    </a>
+                    <a class="row" href="/contact.html">
+                        <span class="big ink">05</span>
+                        <span><span class="t">Contact</span><br><span class="d">Email, links, and how this page is made.</span></span>
+                    </a>
                 </div>
             </div>
+
+            <div class="figure plate-figure">
+                <div class="plate-grid" id="plateGrid">
+                    <button type="button" class="plate small" data-plate-system="deJong" aria-label="Open the De Jong plate"><span class="plate-name">De Jong</span></button>
+                    <button type="button" class="plate small" data-plate-system="standard" aria-label="Open the Standard plate"><span class="plate-name">Standard</span></button>
+                    <button type="button" class="plate small" data-plate-system="ikeda" aria-label="Open the Ikeda plate"><span class="plate-name">Ikeda</span></button>
+                    <button type="button" class="plate small" data-plate-system="henon" aria-label="Open the Hénon plate"><span class="plate-name">Hénon</span></button>
+                    <button type="button" class="plate small" data-plate-system="svensson" aria-label="Open the Svensson plate"><span class="plate-name">Svensson</span></button>
+                    <button type="button" class="plate small" data-plate-system="tinkerbell" aria-label="Open the Tinkerbell plate"><span class="plate-name">Tinkerbell</span></button>
+                    <button type="button" class="plate small" data-plate-system="bedhead" aria-label="Open the Bedhead plate"><span class="plate-name">Bedhead</span></button>
+                    <button type="button" class="plate small" data-plate-system="clifford" aria-label="Open the Clifford plate"><span class="plate-name">Clifford</span></button>
+                    <button type="button" class="plate small" data-plate-system="gumowskiMira" aria-label="Open the Gumowski–Mira plate"><span class="plate-name">Gumowski–Mira</span></button>
+                </div>
+                <div class="plate-solo" id="plateSolo" hidden>
+                <div class="plate dynamic-header">
+                    <canvas id="dejongCanvas" data-system="deJong" data-mode="ink" data-cycle="off" data-autostart="off" data-ink="#241d1a" data-ink-alpha="0.6"></canvas>
+                    <div class="equation-box" id="equationBox">
+                        <div class="equation-content" id="equationContent"></div>
+                    </div>
+                </div>
+                <div class="plate-tools">
+                    <button type="button" class="toggle-controls-button back-to-grid" id="backToGrid">← Back to grid view</button>
+                    <div class="system-picker">
+                        <span class="picker-label">System</span>
+                        <select id="systemSelect" class="visually-hidden" aria-hidden="true" tabindex="-1">
+                            <option value="deJong">De Jong attractor</option>
+                            <option value="henon">Hénon map</option>
+                            <option value="tinkerbell">Tinkerbell map</option>
+                            <option value="clifford">Clifford attractor</option>
+                            <option value="ikeda">Ikeda map</option>
+                            <option value="standard">Standard map</option>
+                            <option value="gumowskiMira">Gumowski–Mira map</option>
+                            <option value="bedhead">Bedhead attractor</option>
+                            <option value="svensson">Svensson attractor</option>
+                        </select>
+                        <div class="menu" id="systemMenu">
+                            <button type="button" class="menu-button" id="systemMenuButton" aria-haspopup="listbox" aria-expanded="false">De Jong attractor</button>
+                            <ul class="menu-list" id="systemMenuList" role="listbox" aria-label="Dynamical system" hidden>
+                                <li role="option" data-value="deJong" aria-selected="true">De Jong attractor</li>
+                                <li role="option" data-value="henon">Hénon map</li>
+                                <li role="option" data-value="tinkerbell">Tinkerbell map</li>
+                                <li role="option" data-value="clifford">Clifford attractor</li>
+                                <li role="option" data-value="ikeda">Ikeda map</li>
+                                <li role="option" data-value="standard">Standard map</li>
+                                <li role="option" data-value="gumowskiMira">Gumowski–Mira map</li>
+                                <li role="option" data-value="bedhead">Bedhead attractor</li>
+                                <li role="option" data-value="svensson">Svensson attractor</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="header-overlay">
+                        <h1>Connor Stephens</h1>
+                        <div class="header-controls">
+                            <button id="toggleControls" class="toggle-controls-button">Parameters</button>
+                            <div id="controlsPanel" class="controls-panel hidden">
+                                <div class="controls-header">
+                                    <h4>Parameters</h4>
+                                    <button id="closeControls" class="close-controls" aria-label="Close">×</button>
+                                </div>
+                                <div id="parameterControls" class="parameter-controls"></div>
+                                <button id="resetParams" class="reset-button">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="caption">Nine two-dimensional maps, run forward from random starting points while their parameters drift. Click a plate to open it and play with the parameters, or read <a href="/about-landing.html">how it works →</a> Pictures like these are what a network learns to read a system's parameters from: <a href="/projects/poincare.html">deep learning for dynamical systems →</a></div>
+            </div>
         </div>
-    </header>
+    </main>
 
-    <!-- Full-screen de Jong visualization with navigation overlay -->
-
-    <!-- JavaScript -->
-    <script src="/js/darkmode.js"></script>
     <script src="/js/nav.js"></script>
     <script src="/js/components.js"></script>
     <script src="/js/systems.js"></script>
+    <script src="/js/plates.js"></script>
     <script src="/js/header.js"></script>
+    <script>
+    // Plate tools: a styled system menu that drives the (hidden) select, and click-away for both popups.
+    (function () {
+        const select = document.getElementById('systemSelect');
+        const btn = document.getElementById('systemMenuButton');
+        const list = document.getElementById('systemMenuList');
+        const panel = document.getElementById('controlsPanel');
+        const toggle = document.getElementById('toggleControls');
+
+        function openMenu(open) { list.hidden = !open; btn.setAttribute('aria-expanded', String(open)); }
+        btn.addEventListener('click', e => { e.stopPropagation(); openMenu(list.hidden); });
+        list.addEventListener('click', e => {
+            const li = e.target.closest('li[data-value]'); if (!li) return;
+            list.querySelectorAll('li').forEach(x => x.removeAttribute('aria-selected'));
+            li.setAttribute('aria-selected', 'true');
+            btn.textContent = li.textContent;
+            select.value = li.dataset.value;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            openMenu(false);
+        });
+        document.addEventListener('click', e => {
+            if (!list.hidden && !e.target.closest('#systemMenu')) openMenu(false);
+            if (panel && !panel.classList.contains('hidden') && !e.target.closest('#controlsPanel') && !e.target.closest('#toggleControls')) {
+                panel.classList.add('hidden'); toggle.textContent = 'Parameters';
+            }
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { openMenu(false); if (panel && !panel.classList.contains('hidden')) { panel.classList.add('hidden'); toggle.textContent = 'Parameters'; } } });
+    })();
+    </script>
+    <script>
+    // Open a tile as the big plate, and go back again.
+    (function () {
+        const grid = document.getElementById('plateGrid');
+        const solo = document.getElementById('plateSolo');
+        grid.addEventListener('click', e => {
+            const tile = e.target.closest('[data-plate-system]'); if (!tile) return;
+            window.platesGrid.stop();
+            grid.hidden = true; solo.hidden = false;
+            window.headerPlate.show(tile.dataset.plateSystem);
+        });
+        document.getElementById('backToGrid').addEventListener('click', () => {
+            window.headerPlate.stop();
+            solo.hidden = true; grid.hidden = false;
+            window.platesGrid.resize(); window.platesGrid.start();
+        });
+    })();
+    </script>
 </body>
 </html>

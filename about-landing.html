@@ -5,32 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About This Page - Connor Stephens</title>
     <meta name="description" content="Learn about the dynamical systems visualization on the landing page">
-    <link rel="icon" type="image/png" href="/static/favicon.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/static/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']], processEscapes: true },
+            options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre'] }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
+
 </head>
 <body>
     <div id="nav-placeholder"></div>
 
-    <main>
+    <main class="page">
+        <div class="running"><span>Contents</span><span></span></div>
+
         <section class="hero">
-            <h1>About This Page</h1>
-            <p class="subtitle">The dynamical systems visualization behind the landing page</p>
+            <h1>How it works</h1>
+            <p class="subtitle">The dynamical systems drawn on the contents page</p>
         </section>
 
         <section class="content">
-            <h2>What You're Seeing</h2>
-            <p>The animated background on the landing page displays the trajectories of a <strong>dynamical system</strong>, integrated forwards in time from a collection of random initial conditions. Points that diverge to infinity are resampled to initial conditions. The previous points slowly fade over time, leaving a temporary imprint as you adjust the parameters that govern the dynamical system. The gentle 'motion' of the system is caused by small oscillating perturbations to the system parameters.</p>
+            <div class="figure plate-figure">
+                <div class="plate dynamic-header">
+                    <canvas id="dejongCanvas" data-system="deJong" data-mode="ink" data-cycle="off" data-ink="#241d1a" data-ink-alpha="0.6"></canvas>
+                    <div class="equation-box" id="equationBox">
+                        <div class="equation-content" id="equationContent"></div>
+                    </div>
+                </div>
+                <div class="plate-tools">
+                    <div class="system-picker">
+                        <span class="picker-label">System</span>
+                        <select id="systemSelect" class="visually-hidden" aria-hidden="true" tabindex="-1">
+                            <option value="deJong">De Jong attractor</option>
+                            <option value="henon">Hénon map</option>
+                            <option value="tinkerbell">Tinkerbell map</option>
+                            <option value="clifford">Clifford attractor</option>
+                            <option value="ikeda">Ikeda map</option>
+                            <option value="standard">Standard map</option>
+                            <option value="gumowskiMira">Gumowski–Mira map</option>
+                            <option value="bedhead">Bedhead attractor</option>
+                            <option value="svensson">Svensson attractor</option>
+                        </select>
+                        <div class="menu" id="systemMenu">
+                            <button type="button" class="menu-button" id="systemMenuButton" aria-haspopup="listbox" aria-expanded="false">De Jong attractor</button>
+                            <ul class="menu-list" id="systemMenuList" role="listbox" aria-label="Dynamical system" hidden>
+                                <li role="option" data-value="deJong" aria-selected="true">De Jong attractor</li>
+                                <li role="option" data-value="henon">Hénon map</li>
+                                <li role="option" data-value="tinkerbell">Tinkerbell map</li>
+                                <li role="option" data-value="clifford">Clifford attractor</li>
+                                <li role="option" data-value="ikeda">Ikeda map</li>
+                                <li role="option" data-value="standard">Standard map</li>
+                                <li role="option" data-value="gumowskiMira">Gumowski–Mira map</li>
+                                <li role="option" data-value="bedhead">Bedhead attractor</li>
+                                <li role="option" data-value="svensson">Svensson attractor</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="header-overlay">
+                        <h1>Connor Stephens</h1>
+                        <div class="header-controls">
+                            <button id="toggleControls" class="toggle-controls-button">Parameters</button>
+                            <div id="controlsPanel" class="controls-panel hidden">
+                                <div class="controls-header">
+                                    <h4>Parameters</h4>
+                                    <button id="closeControls" class="close-controls" aria-label="Close">×</button>
+                                </div>
+                                <div id="parameterControls" class="parameter-controls"></div>
+                                <button id="resetParams" class="reset-button">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="caption">Pick a system, then open the parameters and drag. Points that fly off to infinity are started again from random initial conditions.</div>
+            </div>
+        </section>
+
+        <section class="content">
+            <h2>What you're seeing</h2>
+            <p>Each plate on the contents page, and the one above, displays the trajectories of a <strong>dynamical system</strong>, integrated forwards in time from a collection of random initial conditions. Points that diverge to infinity are resampled to initial conditions. The previous points slowly fade over time, leaving a temporary imprint as you adjust the parameters that govern the dynamical system. The gentle 'motion' of the system is caused by small oscillating perturbations to the system parameters.</p>
 
             <div class="henon-explanation">
             <h3>The Hénon Map</h3>
-            <p>The default system is the Hénon map, which is defined by the iterative equations:</p>
+            <p>Take the Hénon map, for example, which is defined by the iterative equations:</p>
             <div class="math-container">
                 $$\begin{align}
                 x_{n+1} &= 1 - ax_n^2 + y_n \\
                 y_{n+1} &= bx_n,
                 \end{align}$$
             </div>
-            <p>where $a$ and $b$ are system parameters (typically $a = 1.4$ and $b = 0.3$). This system displays a mix of regular and chaotic trajectories depending on the initial conditions $(x_0, y_0)$. Regular trajectories trace out one-dimensional curves (bright lines) on the two-dimensional plane, whereas chaotic trajectories create space-filling curves (broad, fuzzy areas). Playing around with $a$ and $b$, you'll likely build some intuition for how these parameters change the shape of where trajectories collect -- maybe you could even start to guess the values of $a$ and $b$ just by looking at the size and shapes of the trajectories that the system traces out. This might give you the idea that a computer-vision model could be trained to do something like this (and you would be <a href="/projects/poincare.html">correct</a>).</p>
+            <p>where $a$ and $b$ are system parameters (the textbook values are $a = 1.4$ and $b = 0.3$; the plate uses $a = 1.32$ and $b = 0.89$). This system displays a mix of regular and chaotic trajectories depending on the initial conditions $(x_0, y_0)$. Regular trajectories trace out one-dimensional curves (bright lines) on the two-dimensional plane, whereas chaotic trajectories create space-filling curves (broad, fuzzy areas). Playing around with $a$ and $b$, you'll likely build some intuition for how these parameters change the shape of where trajectories collect -- maybe you could even start to guess the values of $a$ and $b$ just by looking at the size and shapes of the trajectories that the system traces out. This might give you the idea that a computer-vision model could be trained to do something like this (and you would be <a href="/projects/poincare.html">correct</a>).</p>
 
             For a little pizazz I also make $a$ and $b$ dynamic:
             <div class="math-container">
@@ -43,35 +115,56 @@
         </div>
 
 
-            <h2>Interactive Controls</h2>
-            <p>Click "Show Controls" to reveal parameter sliders that let you modify the mathematical constants in real-time. Each system has different parameters that control aspects like:</p>
+            <h2>Parameters</h2>
+            <p>Under the plate above, "Parameters" reveals sliders that let you modify the mathematical constants in real time. Each system has different parameters that control aspects like:</p>
             <ul>
                 <li><strong>Shape and size</strong> of the attractor</li>
                 <li><strong>Density and distribution</strong> of points</li>
                 <li><strong>Symmetry and orientation</strong> of patterns</li>
                 <li><strong>Chaotic vs. regular</strong> behavior</li>
             </ul>
-            <p>The "Reset Parameters" button returns each system to its defaults, selected to represent a visually interesting starting point.</p>
+            <p>The "Reset" button returns each system to its defaults, selected to represent a visually interesting starting point.</p>
 
         </section>
 
         <div class="back-link">
-            <a href="/">← Back to landing page</a>
+            <a href="/">← Back to Contents</a>
         </div>
     </main>
     
     <!-- JavaScript -->
-    <script>
-window.MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']]
-  }
-};
-</script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js"></script>
-    <script src="/js/darkmode.js"></script>
     <script src="/js/nav.js"></script>
     <script src="/js/components.js"></script>
+    <script src="/js/systems.js"></script>
+    <script src="/js/header.js"></script>
+    <script>
+    // Plate tools: a styled system menu that drives the (hidden) select, and click-away for both popups.
+    (function () {
+        const select = document.getElementById('systemSelect');
+        const btn = document.getElementById('systemMenuButton');
+        const list = document.getElementById('systemMenuList');
+        const panel = document.getElementById('controlsPanel');
+        const toggle = document.getElementById('toggleControls');
+
+        function openMenu(open) { list.hidden = !open; btn.setAttribute('aria-expanded', String(open)); }
+        btn.addEventListener('click', e => { e.stopPropagation(); openMenu(list.hidden); });
+        list.addEventListener('click', e => {
+            const li = e.target.closest('li[data-value]'); if (!li) return;
+            list.querySelectorAll('li').forEach(x => x.removeAttribute('aria-selected'));
+            li.setAttribute('aria-selected', 'true');
+            btn.textContent = li.textContent;
+            select.value = li.dataset.value;
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            openMenu(false);
+        });
+        document.addEventListener('click', e => {
+            if (!list.hidden && !e.target.closest('#systemMenu')) openMenu(false);
+            if (panel && !panel.classList.contains('hidden') && !e.target.closest('#controlsPanel') && !e.target.closest('#toggleControls')) {
+                panel.classList.add('hidden'); toggle.textContent = 'Parameters';
+            }
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { openMenu(false); if (panel && !panel.classList.contains('hidden')) { panel.classList.add('hidden'); toggle.textContent = 'Parameters'; } } });
+    })();
+    </script>
 </body>
 </html>

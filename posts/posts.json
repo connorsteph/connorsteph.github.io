@@ -10,7 +10,7 @@
     },
     {
       "title": "Practical Linear Algebra for Machine Learning",
-      "url": "/posts/practical-ml-linalg.html",
+      "url": "/post.html?file=practical-ml-linalg",
       "date": "October 8, 2025",
       "category": "Machine Learning",
       "excerpt": "A practical guide to linear algebra for machine learning.",

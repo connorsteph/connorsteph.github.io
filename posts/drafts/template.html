@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DRAFT: POST_TITLE - Connor Stephens</title>
     <meta name="description" content="DRAFT: POST_DESCRIPTION">
-    <link rel="icon" type="image/png" href="/static/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/static/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 
     <!-- MathJax Configuration -->
@@ -26,15 +32,11 @@
 <body>
     <div id="nav-placeholder"></div>
 
-    <header class="base-header dynamic-header">
-        <canvas id="dejongCanvas" data-system="henon"></canvas>
-        <div class="header-overlay">
-            <h1>DRAFT: POST_TITLE</h1>
-        </div>
-    </header>
+    <main class="page">
+        <div class="running"><span>Notes</span><span></span></div>
 
-    <main>
         <section class="hero">
+            <div class="header-overlay"><h1>DRAFT: POST_TITLE</h1></div>
             <div class="draft-notice">
                 <p><strong>🚧 DRAFT POST 🚧</strong></p>
                 <p>This post is still being written and is not yet published. It will not appear in the public posts listing.</p>
@@ -85,15 +87,12 @@ def example_function():
         </section>
 
         <div class="back-link">
-            <a href="/posts.html">← Back to Posts</a>
+            <a href="/posts.html">← Back to Notes</a>
         </div>
     </main>
 
     <!-- JavaScript -->
-    <script src="/js/darkmode.js"></script>
     <script src="/js/nav.js"></script>
     <script src="/js/components.js"></script>
-    <script src="/js/systems.js"></script>
-    <script src="/js/header.js"></script>
 </body>
 </html>
