@@ -173,7 +173,7 @@ p:last-child { margin-bottom: 0; }
 /* figures */
 .figure { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .figure img { width: 100%; border: 1px solid var(--rule); }
-.caption { font-family: var(--mono); font-style: italic; font-size: 11px; color: var(--mute); line-height: 1.5; }
+.caption { font-family: var(--mono); font-style: italic; font-size: 12.5px; color: var(--ink); line-height: 1.5; }
 .caption a { font-style: normal; }
 .caption a { color: var(--ink); }
 
@@ -320,7 +320,10 @@ main.page > .hero .subtitle { font-size: 16px; color: var(--mute); max-width: 56
 .content img { border: 1px solid var(--rule); }
 .content figure { margin: 1.4em 0; }
 .content .diagram svg { width: 100%; height: auto; display: block; }
-.content figcaption { font-family: var(--mono); font-size: 10px; color: var(--mute); margin-top: 8px; }
+.content figcaption { font-family: var(--mono); font-size: 13px; line-height: 1.5; color: var(--ink); margin-top: 8px; }
+.content figcaption a { border-bottom: 1px solid var(--rule); }
+.content figure.bare img { border: 0; }
+.content figure video { display: block; width: 100%; height: auto; }
 .content pre { background: rgba(20, 20, 18, 0.05); border: 1px solid var(--rule); padding: 12px 14px; overflow-x: auto; font-family: var(--mono); font-size: 12px; }
 .content code { font-family: var(--mono); font-size: 0.9em; }
 .content blockquote { margin: 1.2em 0; padding-left: 16px; border-left: 3px solid var(--accent); font-family: var(--serif); font-size: 1.15em; }

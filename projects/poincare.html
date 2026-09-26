@@ -20,6 +20,10 @@
     <main class="page">
         <div class="running"><span>Work</span><span></span></div>
 
+        <figure class="frieze article-frieze">
+            <img src="/static/projects/poincare/sam-header.png" alt="Poincaré sections of the swinging Atwood's machine at six mass ratios, from μ = 1.5 to μ = 15" width="2000" height="415">
+        </figure>
+
         <section class="hero">
             <h1>Deep Learning for Dynamical Systems Analysis</h1>
             <p class="subtitle">Wacky and wonderful ways to analyze trajectory data</p>
@@ -36,23 +40,20 @@
 
             <hr>
 
-            <div style="width: 100%; margin: 2rem 0;">
-                <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
-                    <div style="flex: 1; min-width: 300px;">
-                        <p><strong>Figure 1:</strong> Real-time construction of <a href="https://en.wikipedia.org/wiki/Poincar%C3%A9_map">Poincare maps</a> for the <a href="https://en.wikipedia.org/wiki/Swinging_Atwood%27s_machine">Swinging Atwood's Machine (SAM)</a> in a stable (red) and chaotic (green) configuration. On the left is the system configuration, on the right is the Poincare-Map representation of the system.</p>
-                        <img src="/static/projects/poincare/poincare_realtime.gif" style="width: 100%; height: auto;" alt="Real-time construction of Poincare maps" />
-                    </div>
-                    <div style="flex: 1; min-width: 300px;">
-                        <p><strong>Figure 2:</strong> Sampled Poincare maps for the Swinging Atwood's Machine (colours correspond to trajectories from different initial configurations) for various values of the system's mass-ratio parameter, μ.</p>
-                        <img src="/static/projects/poincare/poincare_sampled.png" style="width: 100%; height: auto;" alt="Sampled Poincare maps" />
-                    </div>
-                </div>
-            </div>
+            <figure class="bare">
+                <video src="/static/projects/poincare/sam-anim.mp4" poster="/static/projects/poincare/sam-anim-poster.png" width="1200" height="600" autoplay muted loop playsinline preload="metadata" aria-label="Five swinging Atwood's machines released from different starts, beside the Poincaré section where each one's crossings build up in its colour"></video>
+                <figcaption><strong>Figure 1.</strong> The <a href="https://en.wikipedia.org/wiki/Swinging_Atwood%27s_machine">swinging Atwood's machine</a> at mass ratio μ = 2.3 (left), with five bobs started from different places, and its <a href="https://en.wikipedia.org/wiki/Poincar%C3%A9_map">Poincaré section</a> (right). Each time a bob passes straight below its pulley, a dot is added to the section in that bob's colour. The four regular orbits trace closed rings; the green, chaotic one scatters across the sea between them. The faint grey behind is the full section.</figcaption>
+            </figure>
 
-            <div style="width: 100%; margin: 2rem 0;">
-                <p><strong>Figure 3:</strong> An example input-output for a ResNet trained to estimate the mass ratio parameter of the SAM system which produced the Poincare map (left) input to the network. On the right is the parameter estimate, along with a higher quality (trajectories integrated from more initial conditions, for longer) Poincare map corresponding to the network's estimated parameter.</p>
-                <img src="/static/projects/poincare/resnet_example.png" style="width: 100%; height: auto;" alt="ResNet input-output example" />
-            </div>
+            <figure class="bare">
+                <img src="/static/projects/poincare/sam-scan.png" alt="Twelve Poincaré sections of the swinging Atwood's machine for mass ratios from 1.5 to 15" width="1996" height="806" loading="lazy">
+                <figcaption><strong>Figure 2.</strong> Sections for twelve values of μ, each from a grid of starting conditions. Regular orbits are in ink, chaotic ones in green. The picture changes smoothly with μ even where most orbits are chaotic, and that is what the network learns to read.</figcaption>
+            </figure>
+
+            <figure>
+                <img src="/static/projects/poincare/resnet_example.png" alt="ResNet input-output example" loading="lazy">
+                <figcaption><strong>Figure 3.</strong> An example input and output for a ResNet trained to estimate μ from a Poincaré map (left). On the right is its estimate, with a higher-quality map (more starting conditions, integrated for longer) at the estimated μ.</figcaption>
+            </figure>
         </section>
 
         <div class="back-link">

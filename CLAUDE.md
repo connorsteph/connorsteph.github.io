@@ -15,7 +15,8 @@ Preview: `python3 -m http.server 8080` → http://localhost:8080. Work on `dev`;
 - Type: Libre Caslon Display + Libre Caslon Text for everything.
 - Inks: ink `#241d1a`, forest green `#24402f` (also the cloth), vermilion accent.
   Widened palette for multi-series figures: ochre `#b8862b`, slate `#4a6478`, plum.
-- Figure captions: always in the ink colour (never accent/green), sized to stay readable at page width.
+- Figure captions: always in the ink colour (never accent/green), sized to stay readable at page width
+  (`.caption` 12.5px, `.content figcaption` 13px in style.css).
 - Copy: plain words. No magazine-bit copy ("Issue 01", bylines, punned headlines, "continued on"),
   no in-jokes or unexplained jargon.
 - Textures in `static/textures/` are real scans from Made by Gray's "Essential Textures" pack (licensed).
@@ -31,9 +32,9 @@ Preview: `python3 -m http.server 8080` → http://localhost:8080. Work on `dev`;
 |---|---|---|
 | index.html | live canvas (js/header.js, js/systems.js, js/plates.js) | JS |
 | about.html | static/rnasep/frieze.png | ~/repos/blender/rnase_p |
-| projects/atom1.html | static/rnasep/folds-header.png, folds.png, turntable-vermilion.gif, chemical-probing.svg | ~/repos/blender/rna_folds, rnase_p, diagrams/chemical_probing |
+| projects/atom1.html | static/rnasep/folds-header.png (six folds), turntable-vermilion.gif, chemical-probing.svg (inlined) | ~/repos/blender/rna_folds, rnase_p, diagrams/chemical_probing |
 | projects/poincare.html | static/projects/poincare/sam-header.png, sam-scan.png, sam-anim.mp4 (+ poster) | tools/poincare |
-| projects.html | sam-anim-poster.png as the Poincaré item's still | tools/poincare |
+| projects.html | sam-anim-poster.png (Poincaré item), static/rnasep/folds.png (ATOM-1 item, twelve folds) | tools/poincare, rna_folds |
 
 ## Asset pipelines
 - **Poincaré / swinging Atwood's machine (SAM)** — `tools/poincare/` (see its README). heyoka + matplotlib.
