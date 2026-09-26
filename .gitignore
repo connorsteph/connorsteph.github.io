@@ -4,3 +4,8 @@ _site
 .jekyll-metadata
 vendor
 .notes.md
+
+# local drafts and scratch
+Claude outputs/
+_to_delete/
+.DS_Store
