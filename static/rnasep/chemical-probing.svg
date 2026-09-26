@@ -1,5 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 548" role="img" aria-label="Chemical probing: a reagent marks the flexible nucleotides of a folded RNA; reverse transcription turns each mark into a misread base in the DNA copy; counting misreads per position gives a reactivity profile, which is coloured back onto the fold" style="width:100%;height:auto;display:block">
-<text x="8.0" y="22.0" font-size="13" fill="currentColor"><tspan fill="#c8502a">1</tspan>  probe the folded RNA</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 588" role="img" aria-label="Chemical probing: a reagent marks the flexible nucleotides of a folded RNA; reverse transcription turns each mark into a misread base in the DNA copy; counting misreads per position gives a reactivity profile, which is coloured back onto the fold" style="width:100%;height:auto;display:block">
+<line x1="8" y1="6" x2="254" y2="6" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+<text x="8" y="36" font-size="28" fill="#c8502a">1</text>
+<text x="32" y="33" font-size="14" fill="currentColor">probe the folded RNA</text>
+<line x1="270" y1="6" x2="712" y2="6" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+<text x="270" y="36" font-size="28" fill="#c8502a">2</text>
+<text x="294" y="33" font-size="14" fill="currentColor">copy it into DNA</text>
+<line x1="270" y1="300" x2="712" y2="300" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+<text x="270" y="330" font-size="28" fill="#c8502a">3</text>
+<text x="294" y="327" font-size="14" fill="currentColor">reactivity per nucleotide</text>
+<line x1="8" y1="300" x2="254" y2="300" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+<text x="8" y="330" font-size="28" fill="#c8502a">4</text>
+<text x="32" y="327" font-size="14" fill="currentColor">colour the fold by reactivity</text>
+<g transform="translate(0 22)">
 <line x1="124.5" y1="50.5" x2="124.5" y2="54.4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
 <line x1="124.5" y1="61.4" x2="124.5" y2="65.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
 <line x1="124.5" y1="72.3" x2="124.5" y2="76.2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
@@ -157,7 +169,6 @@
 <path d="M 237.0 52.0 Q 286.0 30.0 328.0 56.0" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
 <polyline points="320.2,55.4 328.0,56.0 323.9,49.3" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="290.0" y="66.0" font-size="12" text-anchor="middle" fill="currentColor" font-style="italic">unfold</text>
-<text x="336.0" y="22.0" font-size="13" fill="currentColor"><tspan fill="#c8502a">2</tspan>  copy it into DNA</text>
 <line x1="336.0" y1="78.0" x2="690.0" y2="78.0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
 <text x="328.0" y="82.0" font-size="12" text-anchor="end" fill="currentColor" opacity="0.7">5′</text>
 <text x="696.0" y="82.0" font-size="12" text-anchor="start" fill="currentColor" opacity="0.7">3′</text>
@@ -301,10 +312,11 @@
 <line x1="644.3" y1="207.0" x2="644.3" y2="215.0" stroke="#c8502a" stroke-width="1.8" stroke-linecap="round"/>
 <text x="328.0" y="140.0" font-size="12" text-anchor="end" fill="currentColor" font-style="italic">copies</text>
 <text x="328.0" y="155.0" font-size="12" text-anchor="end" fill="#c8502a" font-style="italic">misreads</text>
-<polyline points="509.4,275.0 513.0,282.0 516.6,275.0" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="513.0" y1="228.0" x2="513.0" y2="282.0" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
-<text x="503.0" y="248.0" font-size="12" text-anchor="end" fill="currentColor" font-style="italic">count misreads at each position</text>
-<text x="336.0" y="300.0" font-size="13" fill="currentColor"><tspan fill="#c8502a">3</tspan>  reactivity per nucleotide</text>
+<polyline points="608.4,287.0 612.0,294.0 615.6,287.0" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="612.0" y1="228.0" x2="612.0" y2="294.0" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+<text x="602.0" y="250.0" font-size="12" text-anchor="end" fill="currentColor" font-style="italic">count misreads at each position</text>
+</g>
+<g transform="translate(0 40)">
 <rect x="334.1" y="356.7" width="3.9" height="25.3" fill="#c8502a"/>
 <rect x="339.8" y="379.2" width="3.9" height="2.8" fill="#c8502a"/>
 <rect x="345.5" y="374.7" width="3.9" height="7.3" fill="#c8502a"/>
@@ -371,7 +383,6 @@
 <line x1="332.0" y1="382.0" x2="694.0" y2="382.0" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
 <text x="328.0" y="316.0" font-size="12" text-anchor="end" fill="currentColor" font-style="italic" opacity="0.8">high</text>
 <text x="328.0" y="386.0" font-size="12" text-anchor="end" fill="currentColor" font-style="italic" opacity="0.8">low</text>
-<text x="8.0" y="300.0" font-size="13" fill="currentColor"><tspan fill="#c8502a">4</tspan>  colour the fold by reactivity</text>
 <line x1="124.5" y1="326.5" x2="124.5" y2="330.4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
 <line x1="124.5" y1="337.4" x2="124.5" y2="341.3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
 <line x1="124.5" y1="348.3" x2="124.5" y2="352.2" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
@@ -528,4 +539,5 @@
 <circle cx="150.0" cy="536.0" r="3.5" fill="#c8502a" fill-opacity="0.77" stroke="currentColor" stroke-width="1"/>
 <circle cx="172.0" cy="536.0" r="3.5" fill="#c8502a" fill-opacity="1.00" stroke="currentColor" stroke-width="1"/>
 <text x="186.0" y="540.0" font-size="12" text-anchor="start" fill="currentColor" font-style="italic" opacity="0.8">high</text>
+</g>
 </svg>
