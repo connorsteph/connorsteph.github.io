@@ -24,10 +24,14 @@ from matplotlib.collections import LineCollection
 
 import sam
 import render
-from render import INK, VERMILION, PAPER, TEXT, is_chaotic
+from render import INK, VERMILION, TEXT, is_chaotic
 
 GREEN = "#24402f"
 GREY = "#241d1a"
+# frames are drawn on white so the page can multiply them onto its paper
+# (mix-blend-mode in style.css); the poster is saved with a transparent ground
+GROUND = "white"
+PULLEY = 0.035
 HERE = Path(__file__).parent
 OUT = HERE / "out"
 FRAMES = HERE / "frames"
@@ -103,8 +107,34 @@ PALETTE = (INK, VERMILION, OCHRE, SLATE, PLUM)
 SEA_INKS = (GREEN, "#3f6b5a")
 
 
+def machine_limits(trajs, a, L, t_lim, pad=0.07, label_top=0.20):
+    """Axis limits that hold every bob's whole swing, the counterweights and the
+    M / m labels above the pulleys (the old fixed limits cut off the top)."""
+    xs, ys = [-a - PULLEY, a + PULLEY], [label_top]
+    for grid, states, _ in trajs:
+        s = states[grid <= t_lim + 1e-9]
+        r, th = s[:, 0], s[:, 1]
+        xs += [np.min(a + r * np.sin(th)), np.max(a + r * np.sin(th))]
+        ys += [np.min(-r * np.cos(th)), np.max(-r * np.cos(th)), np.min(-(L - r))]
+    return (min(xs) - pad, max(xs) + pad), (min(ys) - pad, max(ys) + pad)
+
+
+def check_in_frame(ax, trajs, a, L, margin_px):
+    """Every bob and counterweight position, in pixels, stays margin_px inside the axes."""
+    bb = ax.get_window_extent()
+    worst = np.inf
+    for grid, states, _ in trajs:
+        r, th = states[:, 0], states[:, 1]
+        for xy in (np.c_[a + r * np.sin(th), -r * np.cos(th)], np.c_[np.full_like(r, -a), -(L - r)]):
+            px = ax.transData.transform(xy)
+            worst = min(worst, (px[:, 0] - bb.x0).min(), (bb.x1 - px[:, 0]).min(),
+                        (px[:, 1] - bb.y0).min(), (bb.y1 - px[:, 1]).min())
+    assert worst >= margin_px, f"a bob leaves the frame (closest {worst:.1f}px from the edge)"
+    return worst
+
+
 def build(mu=2.3, t_lim=240.0, fps=30, seconds=24, W=1600, H=800, tail=4.0,
-          name="sam_section_anim", inks=PALETTE, n_reg=4, n_sea=1, scale=1.0):
+          name="sam_section_anim", inks=PALETTE, n_reg=4, n_sea=1, scale=1.0, crf=24):
     ics, d = pick_ics(mu, n_reg=n_reg, n_sea=n_sea)
     inks = [*inks[:n_reg], *SEA_INKS[:n_sea]]   # regular orbits in the inks, sea orbits in green
     trajs = [integrate(ic, mu, t_lim) for ic in ics]
@@ -114,20 +144,23 @@ def build(mu=2.3, t_lim=240.0, fps=30, seconds=24, W=1600, H=800, tail=4.0,
     T = t_lim * (0.12 * u + 0.88 * u**2.2)
 
     dpi = 100 * scale
-    fig = plt.figure(figsize=(W / 100, H / 100), dpi=dpi, facecolor=PAPER)
+    fig = plt.figure(figsize=(W / 100, H / 100), dpi=dpi, facecolor=GROUND)
     axL = fig.add_axes([0.02, 0.08, 0.52, 0.86]); axR = fig.add_axes([0.57, 0.12, 0.40, 0.82])
     for ax in (axL, axR):
-        ax.set_facecolor(PAPER); ax.set_xticks([]); ax.set_yticks([])
+        ax.set_facecolor(GROUND); ax.set_xticks([]); ax.set_yticks([])
         for s in ax.spines.values(): s.set_visible(False)
     a, L = 0.5, 0.85 + 1.0 / (mu - 1.0) * 0.35
     rmax = 1.0 / (mu - 1.0)
-    axL.set_xlim(-a - 0.2, a + rmax + 0.1); axL.set_ylim(-max(L, rmax) - 0.08, 0.22); axL.set_aspect("equal")
+    xlim, ylim = machine_limits(trajs, a, L, t_lim)
+    axL.set_xlim(*xlim); axL.set_ylim(*ylim); axL.set_aspect("equal")
     axR.set_xlim(-0.02, 1.02); axR.set_ylim(-0.02, 1.02); axR.set_aspect("equal")
 
     # static machine parts
-    axL.plot([-a, a], [0, 0], color=INK, lw=1.0, solid_capstyle="round")
+    # open pulleys (no fill, so nothing opaque sits on a transparent poster):
+    # the bar and strings stop at the rims instead of being hidden underneath
+    axL.plot([-a + PULLEY, a - PULLEY], [0, 0], color=INK, lw=1.0, solid_capstyle="round")
     for x in (-a, a):
-        axL.add_patch(plt.Circle((x, 0), 0.035, fc=PAPER, ec=INK, lw=1.2, zorder=5))
+        axL.add_patch(plt.Circle((x, 0), PULLEY, fc="none", ec=INK, lw=1.2, zorder=5))
     axL.text(-a, 0.12, "M", ha="center", va="bottom", family=TEXT, fontsize=17 * scale, color=INK, style="italic")
     axL.text(a, 0.12, "m", ha="center", va="bottom", family=TEXT, fontsize=17 * scale, color=INK, style="italic")
     axL.text(0.0, -0.03, f"Swinging Atwood's machine,  $\\mu$ = M/m = {mu:g}",
@@ -156,6 +189,10 @@ def build(mu=2.3, t_lim=240.0, fps=30, seconds=24, W=1600, H=800, tail=4.0,
         sc = axR.scatter([], [], s=9 * scale, c=ink, lw=0, zorder=4); pts.append(sc)
         (rg,) = axR.plot([], [], "o", mfc="none", mec=ink, mew=1.0 * scale, ms=14 * scale, zorder=5); rings.append(rg)
 
+    fig.canvas.draw()
+    print(f"machine limits x {xlim[0]:.2f}..{xlim[1]:.2f}, y {ylim[0]:.2f}..{ylim[1]:.2f}; "
+          f"closest bob {check_in_frame(axL, trajs, a, L, margin_px=8 * scale):.0f}px from the edge")
+
     FRAMES.mkdir(exist_ok=True)
     for f in FRAMES.glob("*.png"): f.unlink()
     canvas = fig.canvas
@@ -174,7 +211,9 @@ def build(mu=2.3, t_lim=240.0, fps=30, seconds=24, W=1600, H=800, tail=4.0,
                 rgba = np.tile(matplotlib.colors.to_rgba(inks[i]), (len(segs), 1)); rgba[:, 3] = al * 0.9
                 tails[i].set_color(rgba)
             cw, m = machine_xy(states[j], a, L)
-            strings[i].set_data([cw[0], -a, a, m[0]], [cw[1], 0, 0, m[1]])
+            u = np.array([m[0] - a, m[1]]); u = u / max(np.hypot(*u), 1e-9)
+            strings[i].set_data([cw[0], -a, np.nan, a + PULLEY * u[0], m[0]],
+                                [cw[1], -PULLEY, np.nan, PULLEY * u[1], m[1]])
             masses[i].set_data([m[0]], [m[1]]); cws[i].set_data([cw[0]], [cw[1]])
             c = cross[cross[:, 2] <= t]
             if len(c):
@@ -186,14 +225,18 @@ def build(mu=2.3, t_lim=240.0, fps=30, seconds=24, W=1600, H=800, tail=4.0,
                     rings[i].set_alpha(1 - age / 1.5)
                 else:
                     rings[i].set_data([], [])
-        fig.savefig(FRAMES / f"f_{k:04d}.png", dpi=dpi, facecolor=PAPER)
+        fig.savefig(FRAMES / f"f_{k:04d}.png", dpi=dpi, facecolor=GROUND)
         if k % 60 == 0:
             print(f"frame {k}/{n_frames}")
+    # poster: the last frame (all crossings in place) on a transparent ground
+    OUT.mkdir(exist_ok=True)
+    fig.savefig(OUT / f"{name}-poster.png", dpi=dpi, transparent=True)
     plt.close(fig)
 
     mp4 = OUT / f"{name}.mp4"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(fps), "-i", str(FRAMES / "f_%04d.png"),
-                    "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", str(mp4)], check=True)
+                    "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", str(crf),
+                    "-preset", "slow", "-movflags", "+faststart", str(mp4)], check=True)
     gif = OUT / f"{name}.gif"
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(fps), "-i", str(FRAMES / "f_%04d.png"),
                     "-vf", "fps=20,scale=960:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=64[p];[s1][p]paletteuse=dither=bayer:bayer_scale=3",

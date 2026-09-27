@@ -323,7 +323,8 @@ main.page > .hero .subtitle { font-size: 16px; color: var(--mute); max-width: 56
 .content figcaption { font-family: var(--mono); font-size: 13px; line-height: 1.5; color: var(--ink); margin-top: 8px; }
 .content figcaption a { border-bottom: 1px solid var(--rule); }
 .content figure.bare img { border: 0; }
-.content figure video { display: block; width: 100%; height: auto; }
+/* rendered on white; multiply inks it onto the paper like the landing plate */
+.content figure video { display: block; width: 100%; height: auto; mix-blend-mode: multiply; }
 .content pre { background: rgba(20, 20, 18, 0.05); border: 1px solid var(--rule); padding: 12px 14px; overflow-x: auto; font-family: var(--mono); font-size: 12px; }
 .content code { font-family: var(--mono); font-size: 0.9em; }
 .content blockquote { margin: 1.2em 0; padding-left: 16px; border-left: 3px solid var(--accent); font-family: var(--serif); font-size: 1.15em; }
@@ -394,11 +395,6 @@ main.page > .hero .subtitle { font-size: 16px; color: var(--mute); max-width: 56
 .turntable { margin: 4px 0 6px; display: flex; flex-direction: column; gap: 6px; align-items: center; }
 .turntable img { width: auto; max-width: 100%; max-height: 300px; }
 .turntable .caption { align-self: flex-start; }
-.home-turntable { margin-top: 18px; flex-direction: row; align-items: center; gap: 18px; }
-.home-turntable img { max-height: 220px; border: 0; }
-.home-turntable .caption { align-self: center; }
-.home-turntable .link { color: var(--ink); font-style: normal; }
-.home-turntable:hover .link { color: var(--accent); }
 .folds img, .story .folds img { border: 0; }
 .frieze { margin: 6px 0 4px; display: flex; flex-direction: column; gap: 8px; }
 .frieze img { display: block; width: 100%; height: auto; }

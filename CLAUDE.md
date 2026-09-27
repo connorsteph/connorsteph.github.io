@@ -44,7 +44,8 @@ Preview: `python3 -m http.server 8080` → http://localhost:8080. Work on `dev`;
   Decisions: header = six sections at μ = 1.5, 2.3, 2.7, 3, 3.1, 15 on transparent ground; islands in ink,
   chaotic sea in forest green (per orbit, MEGNO > 2.3). Animation at μ = 2.3: five bobs (ink, vermilion,
   ochre, slate for island orbits; green for a sea orbit), each bob's crossings in its colour over a faint
-  grey full section. A μ = 1.8 cut exists in Drive. Old `poincare_realtime.gif` / `poincare_sampled.png`
+  grey full section; drawn on white and multiplied onto the page (`.content figure video`), poster is a
+  transparent PNG, machine-panel crop computed from the orbits. A μ = 1.8 cut exists in Drive. Old `poincare_realtime.gif` / `poincare_sampled.png`
   are unreferenced now.
   The original ESA research code (SAM + Hénon Poincaré-map repos, paper code, wall-art renders) is at
   `~/Documents/projects/esa_work` — reference only, large.
